@@ -1,7 +1,5 @@
 import { useLocation, useParams } from "react-router-dom";
 
-type userId ={id:string;}
-
 const ModifyUser = () => {
     const { id } = useParams<userId>();
     const location= useLocation();

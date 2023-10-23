@@ -1,15 +1,23 @@
 import { Input, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip, User as UserDom } from "@nextui-org/react";
 import React from "react";
-import { users, columns } from "./data";
 import { DeleteIcon } from "../icons/DeleteIcon";
 import { EditIcon } from "../icons/EditIcon";
 import { EyeIcon } from "../icons/EyeIcon";
 import { User as ModelUser } from "../../models/user";
 import { SearchIcon } from "../icons/SearchIcon";
 import { Link } from "react-router-dom";
+import { useFetch } from "../../helpers/useFetch";
 
 
+//values for the table column
+
+const columns:column[] = [
+  {name: "NAME", uid: "name"},
+  /* {name: "ROLE", uid: "role"}, */
+  {name: "ACTIONS", uid: "actions"},
+];
 const AdminPane = () => {
+    const {data:users, isLoading, error}:FetchedUser=useFetch("http://localhost:8080/users/api/user");
     const renderCell = React.useCallback((user: ModelUser, columnKey: React.Key) => {
         const cellValue = user[columnKey as keyof ModelUser];//user.ts model attributes used as column names
 
@@ -18,7 +26,7 @@ const AdminPane = () => {
                 return (
                     <UserDom avatarProps={{ radius: "lg", src: "" }} description={user.email}
                         name={cellValue} >
-                        {user.email}
+                        {user.name}
                     </UserDom>
                 );
 
