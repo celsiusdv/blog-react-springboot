@@ -21,20 +21,27 @@ public class UserController {
         this.userService=userService;
     }
 
-    @PostMapping("/user")
+    @PostMapping(path = "/user")
     public ResponseEntity<User> createUser(@RequestBody User user){
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 
-    @GetMapping("/user")
+    @GetMapping(path = "/user")
     public ResponseEntity<List<User>>getAll(){
         return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
     }
 
-    @GetMapping("/user/{email}")
+    @GetMapping(path = "/user/{email}")
     public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email){
         return new ResponseEntity<>(userService.findUserByEmail(email), HttpStatus.OK);
     }
+    
+    @PutMapping("/user/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable("id") Integer userId,
+                                           @RequestBody User user){
+        return new ResponseEntity<>(userService.updateUser(userId,user),HttpStatus.OK);
+    }
+
 
 }
 /*

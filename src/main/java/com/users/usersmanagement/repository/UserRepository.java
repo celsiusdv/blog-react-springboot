@@ -14,6 +14,8 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
     //auto-generate a custom search SQL query
     Optional<User> findUserByEmail(String email);//custom Query
+
+
     @Transactional
     @Modifying //annotation to tell that anything mapped to the table is for INSERT/UPDATE/DELETE queries
     @Query("DELETE FROM User u WHERE u.userId=?1")

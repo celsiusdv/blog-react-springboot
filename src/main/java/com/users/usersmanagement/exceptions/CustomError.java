@@ -3,7 +3,7 @@ package com.users.usersmanagement.exceptions;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.Date;
-
+//DTO class to send status code and message through json to the front-end
 public class CustomError {
     private Integer statusCode;
     private String message;
