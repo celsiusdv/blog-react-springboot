@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,15 +20,12 @@ public class UserController {
         this.userService=userService;
     }
 
-    @PostMapping(path = "/user")
-    public ResponseEntity<User> createUser(@RequestBody User user){
-        return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
-    }
 
     @GetMapping(path = "/user")
     public ResponseEntity<List<User>>getAll(){
         return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
     }
+
 
     @GetMapping(path = "/user/{email}")
     public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email){
@@ -42,9 +38,8 @@ public class UserController {
         return new ResponseEntity<>(userService.updateUser(userId,user),HttpStatus.OK);
     }
 
-
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable("id") Integer userId){
+        return new ResponseEntity<>(userService.deleteUser(userId),HttpStatus.OK);
+    }
 }
-/*
-* 		User lara=new User("Lara","lara@email.com","asdfasdf");
-		User jazmine=new User("Jazmine","jaz@mail.com","asdfaf");
-		* */
