@@ -2,19 +2,26 @@ package com.users.usersmanagement.entity;
 
 import javax.persistence.*;
 
-@Table(name = "permissions")
-@Entity(name="Permission")
-public class Permission{
+@Table(name = "privileges")
+@Entity(name="Privilege")
+public class Privilege {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "permission_id")
-    private Integer permissionId;
+    @Column(name = "privilege_id")
+    private Integer privilegeId;
+
     private String privilege;
 
-    public Permission(){}
+    public Privilege(){}
     //overloading constructor to fetch specific column data in jpql query in PermissionRepository
-    public Permission(String privilege){ this.privilege=privilege; }
+    public Privilege(Integer privilegeId, String privilege){
+        this.privilegeId=privilegeId;
+        this.privilege=privilege;
+    }
 
+    public void setPrivilegeId(Integer privilegeId) {this.privilegeId = privilegeId;}
     public void setPrivilege(String privilege){ this.privilege=privilege; }
+
+    public Integer getPrivilegeId() { return privilegeId; }
     public String getPrivilege(){ return this.privilege; }
 
     @Override

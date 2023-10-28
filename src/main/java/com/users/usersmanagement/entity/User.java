@@ -33,9 +33,9 @@ public class User implements UserDetails{
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "users_and_roles",
             joinColumns = @JoinColumn(name = "user_id_junction", referencedColumnName = "user_id",
-                    foreignKey = @ForeignKey(name = "fk_users_user_id")),
+                    foreignKey = @ForeignKey(name = "fk_user_id")),
             inverseJoinColumns = @JoinColumn(name = "role_id_junction", referencedColumnName = "role_id",
-                    foreignKey = @ForeignKey(name = "fk_roles_role_id")))
+                    foreignKey = @ForeignKey(name = "fk_role_id")))
     private Set<Role> authorities;
 
     @Transient//annotation to avoid variable declaration being mapped to a table

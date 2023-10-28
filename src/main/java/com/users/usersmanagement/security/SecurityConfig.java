@@ -9,9 +9,11 @@ import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -29,6 +31,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
     @Autowired
     private KeyProperties keys;
@@ -48,11 +51,12 @@ public class SecurityConfig {
         http.authorizeRequests(auth -> {
             auth.antMatchers("/authentication/api/**").permitAll();
             auth.antMatchers("/users/api/**").hasRole("OWNER");
+            auth.antMatchers(HttpMethod.PUT,"/users/api/user").hasAuthority("edit");
             auth.anyRequest().authenticated();
         });
         http.oauth2ResourceServer(oAuth2 -> {
             oAuth2.jwt(jwt ->
-                    jwt.decoder(jwtDecoder())
+                    jwt.decoder(this.jwtDecoder())
                             .jwtAuthenticationConverter(this.jwtAuthenticationConverter()));
         });
         http.sessionManagement(session -> {
@@ -74,7 +78,7 @@ public class SecurityConfig {
         return NimbusJwtDecoder.withPublicKey(keys.getPublicKey()).build();
     }
 
-    @Bean
+    @Bean//used in TokenGenerator class
     public JwtEncoder jwtEncoder(){//bean used in TokenGenerator.class
         JWK jwk = new RSAKey.Builder(keys.getPublicKey()).privateKey(keys.getPrivateKey()).build();
         JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));

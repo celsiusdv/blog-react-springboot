@@ -3,6 +3,7 @@ package com.users.usersmanagement.entity;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Table(name = "roles")
@@ -15,21 +16,22 @@ public class Role implements GrantedAuthority {
 
     private String authority;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "roles_and_permissions",
-            joinColumns = @JoinColumn(name = "role_id_junction_for_permissions", referencedColumnName = "role_id",
-                    foreignKey = @ForeignKey(name = "fk_roles_role_id_for_permissions")),
-            inverseJoinColumns = @JoinColumn(name = "permission_id_junction", referencedColumnName = "permission_id",
-                    foreignKey = @ForeignKey(name = "fk_permissions_permission_id")))
-    private Set<Permission> privileges;
+    //using only {CascadeType.MERGE, CascadeType.REFRESH} to avoid duplicate entries
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(name = "roles_and_privileges",
+            joinColumns = @JoinColumn(name = "role_id_junction", referencedColumnName = "role_id",
+                    foreignKey = @ForeignKey(name = "fk_role_id_and_privileges")),
+            inverseJoinColumns = @JoinColumn(name = "privilege_id_junction", referencedColumnName = "privilege_id",
+                    foreignKey = @ForeignKey(name = "fk_privilege_id")))
+    private Set<Privilege> privileges=new HashSet<>();
 
     public Role(){}
 
     public void setAuthority(String authority){ this.authority=authority; }
-    public void setPrivileges(Set<Permission> privileges){ this.privileges=privileges; }
-    @Override
-    public String getAuthority() {
+    public void setPrivileges(Set<Privilege> privileges){ this.privileges=privileges; }
+
+    @Override public String getAuthority() {
         return authority;
     }
-    public Set<Permission> getPrivileges(){ return privileges; }
+    public Set<Privilege> getPrivileges(){ return privileges; }
 }

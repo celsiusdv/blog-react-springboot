@@ -5,6 +5,7 @@ import com.users.usersmanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,7 +32,8 @@ public class UserController {
     public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email){
         return new ResponseEntity<>(userService.findUserByEmail(email), HttpStatus.OK);
     }
-    
+
+    @PreAuthorize("hasAuthority('edit')")
     @PutMapping("/user/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") Integer userId,
                                            @RequestBody User user){
