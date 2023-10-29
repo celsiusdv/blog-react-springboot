@@ -87,7 +87,8 @@ public class User implements UserDetails{
     public String toString() {
         return "name: "+name+
                     "\nemail: "+email+
-                    "\npassword: "+password+
-                    "user id: "+userId+"\n";
+                    "\npassword: "+password+"\n"+
+                    "user id: "+userId+"\n"+
+                    "authorities: "+authorities;
     }
 }

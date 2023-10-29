@@ -46,6 +46,7 @@ public class AuthenticationService {
                 String token = tokenService.generateJwt(auth);
                 user= (User) auth.getPrincipal();//get the user from the authentication manager after authentication
                 user.setToken(token);//this entity will have a token without persisting the token in the database
+                System.out.println(user.getAuthorities());
             }
             return user;
         }catch (AuthenticationException e) { throw new UserNotFoundException("invalid user"); }
@@ -54,10 +55,10 @@ public class AuthenticationService {
     private Set<Role> userRole(String roleName){
         Optional<Role> role = roleRepository.findByRoleName(roleName);//get role from database
         Set<Role> roles = new HashSet<>();
-        Set<Privilege> privileges = new HashSet<>(privilegeRepository.getAdminPermissions());// get all privileges from database
+        Set<Privilege> privileges = new HashSet<>(privilegeRepository.getUserPermissions());// get all privileges from database
         if(role.isPresent()){
-            role.get().setPrivileges(privileges);//set permissions to the role
-            roles.add(role.get());//add the role with permissions in the collection to set in the User entity
+            role.get().setPrivileges(privileges);//add child list of privileges to the role
+            roles.add(role.get());//add the role with child list of privileges to set in the User entity
         }
         return roles;
     }
@@ -66,7 +67,7 @@ public class AuthenticationService {
         Optional<User> existingStudent = userRepository.findUserByEmail(email);
         if (existingStudent.isPresent()) throw new RepeatedEmailException("This email is already in use");
         else {
-            User recordUser = new User(name, email, passwordEncoder.encode(password), userRole("ADMIN"));
+            User recordUser = new User(name, email, passwordEncoder.encode(password), userRole("USER"));
             return userRepository.save(recordUser);
         }
 

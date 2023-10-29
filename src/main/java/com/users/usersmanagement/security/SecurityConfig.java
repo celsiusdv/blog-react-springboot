@@ -31,7 +31,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
 public class SecurityConfig {
     @Autowired
     private KeyProperties keys;
@@ -49,9 +48,11 @@ public class SecurityConfig {
         http.cors();
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeRequests(auth -> {
+            //the order of the antMatcher's positions is important, whether the first role is discarded
+            //it will jump in the next block without trying the others below
             auth.antMatchers("/authentication/api/**").permitAll();
-            auth.antMatchers("/users/api/**").hasRole("OWNER");
-            auth.antMatchers(HttpMethod.PUT,"/users/api/user").hasAuthority("edit");
+            auth.antMatchers(HttpMethod.PUT,"/users/api/**").hasAnyRole("ADMIN_edit","USER_edit");
+            auth.antMatchers("/users/api/**").hasRole("ADMIN");
             auth.anyRequest().authenticated();
         });
         http.oauth2ResourceServer(oAuth2 -> {

@@ -22,6 +22,12 @@ public class UserController {
     }
 
 
+    @PutMapping("/user/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable("id") Integer userId,
+                                           @RequestBody User user){
+        return new ResponseEntity<>(userService.updateUser(userId,user),HttpStatus.OK);
+    }
+
     @GetMapping(path = "/user")
     public ResponseEntity<List<User>>getAll(){
         return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
@@ -33,12 +39,6 @@ public class UserController {
         return new ResponseEntity<>(userService.findUserByEmail(email), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('edit')")
-    @PutMapping("/user/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") Integer userId,
-                                           @RequestBody User user){
-        return new ResponseEntity<>(userService.updateUser(userId,user),HttpStatus.OK);
-    }
 
     @DeleteMapping("/user/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable("id") Integer userId){

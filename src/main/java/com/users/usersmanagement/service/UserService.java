@@ -6,6 +6,7 @@ import com.users.usersmanagement.exceptions.RepeatedEmailException;
 import com.users.usersmanagement.exceptions.UserNotFoundException;
 import com.users.usersmanagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +35,7 @@ public class UserService {
                     userRepository.getReferenceById(userId));//user from database to be replaced with new values
             userToUpdate.get().setName(user.getName());
             userToUpdate.get().setEmail(user.getUsername());//getUsername returns an email
-            userToUpdate.get().setPassword(user.getPassword());
+            userToUpdate.get().setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));//encrypt again after updating password
             return userRepository.save(userToUpdate.get());
         }catch (Exception e){
             throw e.getLocalizedMessage().contains("ConstraintViolationException")?

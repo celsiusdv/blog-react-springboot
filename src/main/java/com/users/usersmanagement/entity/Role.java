@@ -34,4 +34,10 @@ public class Role implements GrantedAuthority {
         return authority;
     }
     public Set<Privilege> getPrivileges(){ return privileges; }
+
+    @Override
+    public String toString() {
+        return this.authority+" {\n"+
+                "\tprivileges: "+this.privileges+"\n}";
+    }
 }
