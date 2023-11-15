@@ -2,7 +2,7 @@ import { Input } from "@nextui-org/react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { User } from "../../models/user";
 
-const UserForm = () => {
+const Register = () => {
     ///validators
     const [name,setName]=useState<string>("");
     const [requiredUserName,setRequiredUserName]=useState<boolean>(true);
@@ -37,7 +37,7 @@ const UserForm = () => {
         const user: User = { name, email, password };
         console.log("saving... ", user);
 
-        fetch('http://localhost:8080/users/api/user', {//send user to spring-boot API
+        fetch('http://localhost:8080/authentication/api/register', {//send user to spring-boot API
             method: 'POST',
             headers: { 
                 'Accept': 'application/json',
@@ -59,14 +59,14 @@ const UserForm = () => {
                 onSubmit={(e) =>handleSubmit(e)}>
 
                 <Input size={"md"} type="text" label="User Name" placeholder="Enter your name"
-                 isRequired={requiredUserName} onChange={(e) =>handleRequiredUserName(e)}/>
+                 isRequired={requiredUserName} onChange={(event) =>handleRequiredUserName(event)}/>
 
                 <Input size={"md"} type="email" label="Email" placeholder="Enter your email"
-                 isRequired={requiredEmail} onChange={(e) =>handleRequiredEmail(e)}/>
+                 isRequired={requiredEmail} onChange={(event) =>handleRequiredEmail(event)}/>
 
                  {/* TODO:change type to password later */}
                 <Input size={"md"} type="text" label="Password" placeholder="Enter your password"
-                 isRequired={requiredPassword} onChange={(e) =>handleRequiredPassword(e)}/>
+                 isRequired={requiredPassword} onChange={(event) =>handleRequiredPassword(event)}/>
 
                  <button>submit</button>
             </form>
@@ -75,4 +75,4 @@ const UserForm = () => {
     );
 };
 
-export default UserForm;
+export default Register;

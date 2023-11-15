@@ -3,33 +3,49 @@ import React from "react";
 import { DeleteIcon } from "../icons/DeleteIcon";
 import { EditIcon } from "../icons/EditIcon";
 import { EyeIcon } from "../icons/EyeIcon";
-import { User as ModelUser } from "../../models/user";
 import { SearchIcon } from "../icons/SearchIcon";
 import { Link } from "react-router-dom";
 import { useFetch } from "../../helpers/useFetch";
+import { User } from "../../models/user";
 
 
 //values for the table column
 
 const columns:column[] = [
   {name: "NAME", uid: "name"},
-  /* {name: "ROLE", uid: "role"}, */
+  {name: "ROLE", uid: "role"}, 
   {name: "ACTIONS", uid: "actions"},
 ];
+
 const AdminPane = () => {
-    const {data:users, isLoading, error}:FetchedUser=useFetch("http://localhost:8080/users/api/user");
-    const renderCell = React.useCallback((user: ModelUser, columnKey: React.Key) => {
-        const cellValue = user[columnKey as keyof ModelUser];//user.ts model attributes used as column names
+    let usersTable:UserTable[]=[];//array for the table
+    const {data:users}:FetchedData=useFetch("/users/api/user");
+    users.forEach((user:User,i) =>{
+        usersTable.push({
+            userId: user.userId!,
+            name: user.name!,
+            email: user.email!,
+            role: user.authorities![0].authority!,//setting only the role, but not the privileges
+        })
+        //console.log(usersTable[i]);
+    });
+    const renderCell = React.useCallback((user: UserTable, columnKey: React.Key) => {
+        const cellValue = user[columnKey as keyof UserTable];//user.ts model attributes used as column names
 
         switch (columnKey) {
             case "name":
                 return (
-                    <UserDom avatarProps={{ radius: "lg", src: "" }} description={user.email}
-                        name={cellValue} >
+                    <UserDom avatarProps={{ radius: "lg", src: "" }} description={user.email} name={cellValue} >
                         {user.name}
                     </UserDom>
                 );
-
+            case "role":
+                return (
+                    <div className="flex flex-col">
+                    <p className="text-bold text-sm capitalize">{cellValue}</p>
+                    {/* <p className="text-bold text-sm capitalize text-default-400">{user.role}</p> */}
+                    </div>
+                );
             case "actions":
                 return (
                     <div className="relative flex items-center gap-3">
@@ -85,8 +101,8 @@ const AdminPane = () => {
                     )}
                 </TableHeader>
 
-                <TableBody items={users} >
-                    {(item: ModelUser) => (
+                <TableBody items={usersTable} >
+                    {(item: UserTable) => (
                         <TableRow key={item.userId}>
                             {(columnKey: React.Key) =>(
                                 <TableCell>{renderCell(item, columnKey)}</TableCell>
