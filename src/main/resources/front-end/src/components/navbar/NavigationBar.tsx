@@ -26,6 +26,11 @@ const NavigationBar = () => {
 						Sign Up
 					</Button>
 				</NavbarItem>
+				<NavbarItem>
+					<Button as={Link} color="primary" to="/login" variant="flat">
+						Log in
+					</Button>
+				</NavbarItem>
 			</NavbarContent>
 		</Navbar>
 	);

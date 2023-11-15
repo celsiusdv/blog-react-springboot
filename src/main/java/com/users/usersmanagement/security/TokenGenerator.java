@@ -17,17 +17,17 @@ public class TokenGenerator {
     private JwtEncoder jwtEncoder;
 
     //6- generate a token for the logged user if it is successfully authenticated
-    public String generateJwt(Authentication auth){
+    public String generateJwt(Authentication user){
 
         Instant now = Instant.now();
 
-        String role = auth.getAuthorities().stream()
+        String role = user.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
-                .subject(auth.getName())
+                .subject(user.getName())
                 .claim("roles", role)
                 .build();
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

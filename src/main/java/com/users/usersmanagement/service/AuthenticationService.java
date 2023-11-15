@@ -44,14 +44,17 @@ public class AuthenticationService {
                     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             if(auth.isAuthenticated()){
                 String token = tokenService.generateJwt(auth);
-                user= (User) auth.getPrincipal();//get the user from the authentication manager after authentication
+                //get the user with modified roles from the authentication manager after authentication
+                //check UserDetailsServiceImp -> mergeAuthorities() method to understand the roles modification
+                user= (User) auth.getPrincipal();
                 user.setToken(token);//this entity will have a token without persisting the token in the database
-                System.out.println(user.getAuthorities());
+                System.out.println(user);
             }
             return user;
         }catch (AuthenticationException e) { throw new UserNotFoundException("invalid user"); }
     }
 
+    //get roles and privileges and set to the user before persisting in the method registerUser()
     private Set<Role> userRole(String roleName){
         Optional<Role> role = roleRepository.findByRoleName(roleName);//get role from database
         Set<Role> roles = new HashSet<>();
@@ -64,8 +67,8 @@ public class AuthenticationService {
     }
 
     public User registerUser(String name, String email, String password) {
-        Optional<User> existingStudent = userRepository.findUserByEmail(email);
-        if (existingStudent.isPresent()) throw new RepeatedEmailException("This email is already in use");
+        Optional<User> existingUser = userRepository.findUserByEmail(email);
+        if (existingUser.isPresent()) throw new RepeatedEmailException("This email is already in use");
         else {
             User recordUser = new User(name, email, passwordEncoder.encode(password), userRole("USER"));
             return userRepository.save(recordUser);
