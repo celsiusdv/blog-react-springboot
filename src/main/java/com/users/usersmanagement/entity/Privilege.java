@@ -26,6 +26,8 @@ public class Privilege {
 
     @Override
     public String toString() {
-        return this.privilege;
+        return "\n\t\t\t\t{\n" +
+                "\t\t\t\t\tprivilegeId: "+privilegeId+"\n"+
+                "\t\t\t\t\tprivilege: "+privilege;
     }
 }

@@ -28,22 +28,9 @@ public class UserDetailsServiceImp implements UserDetailsService {
         try{
             Optional<User> userToFind=userRepository.findUserByEmail(email);
             if(userToFind.isPresent()) user=userToFind.get();
-            user.setAuthorities((Set<Role>) this.mergeAuthorities(user.getAuthorities()));
             return user;//entity that implements UserDetails
         }catch (UsernameNotFoundException e){
             throw new UsernameNotFoundException("invalid user");
         }
-    }
-
-    private Collection<? extends GrantedAuthority> mergeAuthorities(Collection<Role> roles) {
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        for (Role role: roles) {//merge the parent list of role with the child list of privileges
-            authorities.add(new SimpleGrantedAuthority(role.getAuthority()));
-            authorities.addAll(role.getPrivileges()
-                    .stream()
-                    .map(privilege -> new SimpleGrantedAuthority(role.getAuthority()+"_"+privilege.getPrivilege()))
-                    .toList());
-        }
-        return authorities;
     }
 }

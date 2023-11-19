@@ -1,5 +1,7 @@
 package com.users.usersmanagement.controller;
 
+import com.users.usersmanagement.dto.LoginResponse;
+import com.users.usersmanagement.dto.Token;
 import com.users.usersmanagement.entity.User;
 import com.users.usersmanagement.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +25,14 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login") // 1- The client send a request to this endpoint, before the request is completed,it will go to a series of filters, check SecurityConfig.class,
-    public ResponseEntity<User> loginUser(@RequestBody User user) {
+    public ResponseEntity<LoginResponse> loginUser(@RequestBody User user) {
         return new ResponseEntity<>(authenticationService
                 .login(user.getUsername(), user.getPassword()),HttpStatus.OK);
+    }
+
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<Token>refreshToken(@RequestBody Token token){
+        return new ResponseEntity<>( authenticationService.refreshToken(token.getRefreshToken()),HttpStatus.OK );
     }
 
 }
