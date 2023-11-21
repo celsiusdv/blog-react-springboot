@@ -97,10 +97,10 @@ public class User implements UserDetails{
 
     @Override
     public String toString() {
-        return "user id: "+userId+
+        return //"user id: "+userId+
                     "\n"+"name: "+name+
                     "\nemail: "+email+
-                    "\npassword: "+password+
+                    //"\npassword: "+password+
                     "\nauthorities: "+authorities;
     }
 }

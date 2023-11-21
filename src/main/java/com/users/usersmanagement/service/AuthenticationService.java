@@ -7,10 +7,12 @@ import com.users.usersmanagement.entity.RefreshToken;
 import com.users.usersmanagement.entity.Role;
 import com.users.usersmanagement.entity.User;
 import com.users.usersmanagement.exceptions.RepeatedEmailException;
+import com.users.usersmanagement.exceptions.TokenException;
 import com.users.usersmanagement.exceptions.UserNotFoundException;
 import com.users.usersmanagement.repository.PrivilegeRepository;
 import com.users.usersmanagement.repository.RoleRepository;
 import com.users.usersmanagement.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-
+@Slf4j
 @Service
 public class AuthenticationService {
     @Autowired
@@ -48,12 +50,10 @@ public class AuthenticationService {
                     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             if(auth.isAuthenticated()){
                 user= (User) auth.getPrincipal();
-                token.setAccessToken(tokenService.createJwtAccessToken(auth));
-                refreshToken=tokenService.createUUIDRefreshToken(user.getEmail());
+                token.setAccessToken(tokenService.createJwtAccessToken(user));
+                refreshToken=tokenService.createUUIDRefreshToken(user);
                 token.setRefreshToken(refreshToken.getRefreshToken());
-                System.out.println(user);
-                //TODO: check class TokenService in the method createUUIDRefreshToken() if it is possible
-                //TODO: to set a user without calling to the repository
+                log.info("authenticated user: "+ user);
             }
             return new LoginResponse(user, token.getAccessToken(), token.getRefreshToken());
         }catch (AuthenticationException e) { throw new UserNotFoundException("invalid user"); }
@@ -73,7 +73,10 @@ public class AuthenticationService {
 
     public User registerUser(String name, String email, String password) {
         Optional<User> existingUser = userRepository.findUserByEmail(email);
-        if (existingUser.isPresent()) throw new RepeatedEmailException("This email is already in use");
+        if (existingUser.isPresent()) {
+            log.error("email is already in use :(");
+            throw new RepeatedEmailException("This email is already in use :(");
+        }
         else {                                                        //to add an admin just replace "USER" by "ADMIN"
             User recordUser = new User(name, email, passwordEncoder.encode(password), userRole("USER"));
             return userRepository.save(recordUser);
@@ -81,19 +84,21 @@ public class AuthenticationService {
     }
 
     public Token refreshToken(String refreshTokenRequest){
-        RefreshToken refreshToken = null;
+        RefreshToken refreshToken;
         User user;
         String accessToken="";
         try{
             Optional<RefreshToken> checkToken=tokenService.findRefreshToken(refreshTokenRequest);
-            if(checkToken.isPresent()){
-                refreshToken=tokenService.verifyExpiration(checkToken.get());
-                user=refreshToken.getUser();
-                accessToken = tokenService.createJwtAccessToken((Authentication) user);
-            }
+            if(checkToken.isPresent() && refreshTokenRequest != null){
+                refreshToken= checkToken.get();
+                log.info("user with token id:"+refreshToken.getRefreshTokenId()+" is requesting a refresh");
+                //returns a token (which contains a user), or an exception if it has expired
+                user=tokenService.verifyExpiration(refreshToken).getUser();
+                accessToken = tokenService.createJwtAccessToken(user);
+            } else throw new TokenException("invalid token or user is null");
         }catch(Exception e){
-            e.printStackTrace();
-            throw new RuntimeException("Refresh token is not in database!");
+            log.error(e.getMessage());
+            throw new TokenException(e.getMessage());
         }
         return new Token(accessToken, refreshToken.getRefreshToken());
     }

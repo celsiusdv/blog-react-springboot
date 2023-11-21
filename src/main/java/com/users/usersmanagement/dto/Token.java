@@ -22,4 +22,12 @@ public class Token {
     public String getRefreshToken(){
         return this.refreshToken;
     }
+
+    @Override
+    public String toString() {
+        return "Token{" +
+                //"accessToken='" + accessToken + '\'' +
+                "refreshToken='" + refreshToken + '\'' +
+                '}';
+    }
 }

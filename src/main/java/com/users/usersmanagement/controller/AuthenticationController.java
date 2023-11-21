@@ -30,7 +30,7 @@ public class AuthenticationController {
                 .login(user.getUsername(), user.getPassword()),HttpStatus.OK);
     }
 
-    @PostMapping("/refreshtoken")
+    @PostMapping("/refresh-token")
     public ResponseEntity<Token>refreshToken(@RequestBody Token token){
         return new ResponseEntity<>( authenticationService.refreshToken(token.getRefreshToken()),HttpStatus.OK );
     }

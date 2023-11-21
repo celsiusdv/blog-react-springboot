@@ -22,8 +22,13 @@ public class RefreshToken {
     private User user;
 
     public RefreshToken(){}
-    public RefreshToken(String refreshToken){ this.refreshToken= refreshToken; }
     public RefreshToken(String refreshToken, Instant expiryDate, User user){
+        this.refreshToken= refreshToken;
+        this.expiryDate=expiryDate;
+        this.user=user;
+    }
+    public RefreshToken(Integer refreshTokenId, String refreshToken, Instant expiryDate, User user){
+        this.refreshTokenId=refreshTokenId;
         this.refreshToken= refreshToken;
         this.expiryDate=expiryDate;
         this.user=user;
@@ -54,7 +59,10 @@ public class RefreshToken {
     }
     @Override
     public String toString(){
-        return refreshToken+"\n"+expiryDate;
+        return "refresh token: "+refreshToken+
+                "\nrefresh token id: "+refreshTokenId+
+                "\nexpiry date:"+expiryDate+
+                "\nuser: "+this.user;
     }
 
 }
