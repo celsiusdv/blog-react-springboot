@@ -3,17 +3,20 @@ import "./navbar.css";
 import axios from "axios";
 import { User } from "../../models/user";
 import AuthContext from "../../context/AuthProvider";
+import { UserAuth } from "../../models/types";
+import { LoginResponse } from "../../models/login-response";
 
 const Login = () => {
-    const authContext  = useContext<ValueContext | undefined>(AuthContext);
+    const authContext  = useContext<UserAuth | undefined>(AuthContext);//fill the data and manage it in AuthProvider.tsx
     const [email,setEmail]=useState<string>("");
     const [password,setPassword]=useState<string>("");
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) =>{
         event.preventDefault();
         let body: User = { email, password };
-        try{        //wait until the fetching is complete          
-            const response = await axios.post("http://localhost:8080/authentication/api/login",
+        let loginResponse:LoginResponse={};
+        try {        //wait until the fetching is complete          
+            const response = await axios.post<LoginResponse>("http://localhost:8080/authentication/api/login",
             body,//object to send to the server
                 {
                     headers: { 
@@ -23,9 +26,9 @@ const Login = () => {
                     },
                 }
             );
-            body=response.data;
-            authContext?.setAuth(body);
-            console.log(body,"\nresponse from the server");
+            loginResponse=response.data;
+            authContext?.setAuth(loginResponse);
+            console.log("request to the server-> ",body,"\nresponse from the server->",loginResponse);
 
         } catch (error:unknown) {
             if(axios.isAxiosError(error)){

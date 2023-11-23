@@ -12,11 +12,5 @@ export interface User{
     token?:string;
 }
 export interface Role{
-    roleId?:number;
     authority?:string;
-    privileges?:Array<Privilege>;
-}
-export interface Privilege{
-    privilegeId?:number;
-    privilege?:string;
 }

@@ -1,3 +1,6 @@
+import { LoginResponse } from "./login-response";
+import { Role } from "./user";
+
 type FetchedData = {//typechecking for users from useFetch
     data: User[];
     isLoading: Boolean;
@@ -13,16 +16,21 @@ type UserTable={
 }
 
 //------types for Authentication///////////////////////
-type ValueContext = {//typechecking to set props value in AuthContext.Provider
-    /*User model directly form the login response with token and the modified role list
-    * to understand the modified role list, check the java class UserDetailsServiceImp in the method getAuthorities*/
-    auth: User;
-    setAuth: React.Dispatch<React.SetStateAction<User>>;
+type UserAuth = {//typechecking to set props value in AuthContext.Provider
+    auth: LoginResponse;
+    setAuth: React.Dispatch<React.SetStateAction<LoginResponse>>;
 };
 
 type AuthContextProps = {//props to set in AuthProvider.tsx
     children: React.ReactNode;
 };
+type RoleProps={// props to set in RequireAuth.tsx
+    authorities:string[];
+}
+type RestrictedProps={//props to set in Restricted.tsx
+    authorities:string[];
+    children: React.ReactNode;
+}
 
 //////////////////////////////////////////////
 type column = {//typechecking for columns in AdminPane component

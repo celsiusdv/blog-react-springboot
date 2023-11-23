@@ -7,7 +7,8 @@ import Home from './components/home/Home';
 import AdminPane from './components/admin/AdminPane';
 import ModifyUser from './components/admin/ModifyUser';
 import Login from './components/navbar/Login';
-import RequireAuth from './components/navbar/RequireAuth';
+import RequireAuth from './context/RequireAuth';
+
 function App() {
 
 	return (
