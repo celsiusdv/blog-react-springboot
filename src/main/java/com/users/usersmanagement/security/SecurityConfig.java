@@ -79,8 +79,8 @@ public class SecurityConfig {
         return NimbusJwtDecoder.withPublicKey(keys.getPublicKey()).build();
     }
 
-    @Bean//used in TokenGenerator class
-    public JwtEncoder jwtEncoder(){//bean used in TokenGenerator.class
+    @Bean//used in TokenService class
+    public JwtEncoder jwtEncoder(){
         JWK jwk = new RSAKey.Builder(keys.getPublicKey()).privateKey(keys.getPrivateKey()).build();
         JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwks);

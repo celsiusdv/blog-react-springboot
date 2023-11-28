@@ -29,4 +29,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         error.setMessage(e.getMessage());
         return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(TokenException.class)
+    public ResponseEntity<CustomError> tokenException(TokenException e){
+        CustomError error=new CustomError();
+        error.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        error.setMessage(e.getMessage());
+        return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

@@ -1,4 +1,5 @@
 import { useLocation, useParams } from "react-router-dom";
+import { userId } from "../../models/types";
 
 const ModifyUser = () => {
     const { id } = useParams<userId>();

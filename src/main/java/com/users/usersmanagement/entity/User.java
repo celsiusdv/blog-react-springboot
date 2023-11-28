@@ -2,11 +2,15 @@ package com.users.usersmanagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Table(name = "users", uniqueConstraints = {
@@ -38,9 +42,6 @@ public class User implements UserDetails{
                     foreignKey = @ForeignKey(name = "fk_role_id")))
     private Set<Role> authorities;
 
-    @Transient//annotation to avoid variable declaration being mapped to a table
-    private String token;//this variable will not be mapped to a column
-
     public User(){}
     public User(String email, String password, Set<Role> authorities){
         this.email=email;
@@ -66,16 +67,27 @@ public class User implements UserDetails{
     public void setAuthorities(Set<Role> authorities){
         this.authorities=authorities;
     }
-    public void setToken(String token){ this.token=token;}
+
 
     public Integer getUserId(){ return this.userId; }
     public String getName(){ return this.name; }
     public String getEmail() {return this.email;}
 
+
     @JsonIgnore //hide password on request. use @JsonProperty in the instance field variable declaration
     public String getPassword(){ return this.password; }
-    @Override public Set<Role> getAuthorities(){ return this.authorities;}
-    public String getToken(){ return this.token;}
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        //list of mapped users from database to set in SimpleGrantedAuthority
+        List<GrantedAuthority> roles = new ArrayList<>();
+        for (Role role: this.authorities) {//merge the parent list of authorities with the child list of privileges
+            roles.add(new SimpleGrantedAuthority(role.getAuthority()));
+            for(Privilege privilege:role.getPrivileges()){
+                roles.add(new SimpleGrantedAuthority(role.getAuthority()+"_"+privilege.getPrivilege()));
+            }
+        }
+        return roles;
+    }
 
     @Override public String getUsername(){ return this.getEmail(); }
     @Override @JsonIgnore public boolean isAccountNonExpired() {return true;}
@@ -85,10 +97,10 @@ public class User implements UserDetails{
 
     @Override
     public String toString() {
-        return "name: "+name+
+        return //"user id: "+userId+
+                    "\n"+"name: "+name+
                     "\nemail: "+email+
-                    "\npassword: "+password+"\n"+
-                    "user id: "+userId+"\n"+
-                    "authorities: "+authorities;
+                    //"\npassword: "+password+
+                    "\nauthorities: "+authorities;
     }
 }

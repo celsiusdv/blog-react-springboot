@@ -27,9 +27,11 @@ public class Role implements GrantedAuthority {
 
     public Role(){}
 
+    public void setRoleId(Integer roleId){ this.roleId=roleId; }
     public void setAuthority(String authority){ this.authority=authority; }
     public void setPrivileges(Set<Privilege> privileges){ this.privileges=privileges; }
 
+    public Integer getRoleId(){ return this.roleId;}
     @Override public String getAuthority() {
         return authority;
     }
@@ -37,7 +39,8 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return this.authority+" {\n"+
-                "\tprivileges: "+this.privileges+"\n}";
+        return "{" +
+                "\n\t\troleId: "+roleId+"\n\t\tauthority: "+this.authority+" {\n"+
+                "\t\t\tprivileges: "+this.privileges+"\n}";
     }
 }

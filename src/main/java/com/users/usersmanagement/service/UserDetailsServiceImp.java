@@ -28,12 +28,16 @@ public class UserDetailsServiceImp implements UserDetailsService {
         try{
             Optional<User> userToFind=userRepository.findUserByEmail(email);
             if(userToFind.isPresent()) user=userToFind.get();
+<<<<<<< HEAD
             user.setAuthorities((Set<Role>) this.mergeAuthorities(user.getAuthorities()));
+=======
+>>>>>>> authBranch
             return user;//entity that implements UserDetails
         }catch (UsernameNotFoundException e){
             throw new UsernameNotFoundException("invalid user");
         }
     }
+<<<<<<< HEAD
 
     private Collection<? extends GrantedAuthority> mergeAuthorities(Collection<Role> roles) {
         Set<GrantedAuthority> authorities = new HashSet<>();
@@ -46,4 +50,6 @@ public class UserDetailsServiceImp implements UserDetailsService {
         }
         return authorities;
     }
+=======
+>>>>>>> authBranch
 }

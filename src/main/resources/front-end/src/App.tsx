@@ -7,7 +7,12 @@ import Home from './components/home/Home';
 import AdminPane from './components/admin/AdminPane';
 import ModifyUser from './components/admin/ModifyUser';
 import Login from './components/navbar/Login';
+<<<<<<< HEAD
 import RequireAuth from './components/navbar/RequireAuth';
+=======
+import RequireAuth from './context/RequireAuth';
+
+>>>>>>> authBranch
 function App() {
 
 	return (
