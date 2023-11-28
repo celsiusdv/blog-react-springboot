@@ -43,11 +43,6 @@ const RequireAuth = ({ authorities }: RoleProps) => {
         </React.Fragment>
     );
 };
-/*         user.authorities?.find((role:Role) => authorities?.includes(role.authority!))
-            ? <Outlet />//the item to be rendered according to the role in the App component within the routes
-            : user !== null
-                ? <Navigate to="/unauthorized" state={{ from: location }} replace />
-                : <Navigate to="/login" state={{ from: location }} replace /> */
 
 
 export default RequireAuth;
