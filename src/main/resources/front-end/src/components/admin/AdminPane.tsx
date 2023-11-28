@@ -5,8 +5,9 @@ import { EditIcon } from "../icons/EditIcon";
 import { EyeIcon } from "../icons/EyeIcon";
 import { SearchIcon } from "../icons/SearchIcon";
 import { Link } from "react-router-dom";
-import { useFetch } from "../../helpers/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 import { User } from "../../models/user";
+import { column, UserTable, FetchedData } from "../../models/types";
 
 
 //values for the table column
@@ -25,7 +26,7 @@ const AdminPane = () => {
             userId: user.userId!,
             name: user.name!,
             email: user.email!,
-            role: user.authorities![0].authority!,//setting only the role, but not the privileges
+            role: user.authorities![0].authority!,//setting the role
         })
         //console.log(usersTable[i]);
     });

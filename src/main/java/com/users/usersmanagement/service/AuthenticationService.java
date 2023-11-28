@@ -95,6 +95,7 @@ public class AuthenticationService {
                 //returns a token (which contains a user), or an exception if it has expired
                 user=tokenService.verifyExpiration(refreshToken).getUser();
                 accessToken = tokenService.createJwtAccessToken(user);
+                log.info("generated new access token: "+accessToken);
             } else throw new TokenException("invalid token or user is null");
         }catch(Exception e){
             log.error(e.getMessage());

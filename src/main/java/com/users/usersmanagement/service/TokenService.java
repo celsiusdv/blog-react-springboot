@@ -48,7 +48,7 @@ public class TokenService {
         RefreshToken refreshToken = new RefreshToken(
                 UUID.randomUUID().toString(),
                 //ZonedDateTime.now().plusMinutes(1440).toInstant(),//24hs
-                ZonedDateTime.now().plusMinutes(1).toInstant(),
+                ZonedDateTime.now().plusMinutes(4).toInstant(),
                 user);
         return refreshTokenRepository.save(refreshToken);//- saving the refresh token to a database
     }
