@@ -1,4 +1,4 @@
-import { Input } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { User } from "../../models/user";
 import axios from "axios";
@@ -98,7 +98,9 @@ const Register = () => {
                 <Input size={"md"} type="text" label="Confirm Password" placeholder="Confirm your password"
                     isRequired={requiredMatch} onChange={(event) => handleRequiredMatch(event)} />
 
-                 <button>submit</button>
+                <Button color="secondary" variant="flat">
+                    Sign Up
+                </Button>
             </form>
 
         </div>

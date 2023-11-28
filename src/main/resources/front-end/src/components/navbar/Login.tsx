@@ -5,6 +5,7 @@ import { User } from "../../models/user";
 import AuthContext from "../../context/AuthProvider";
 import { UserAuth } from "../../models/types";
 import { LoginResponse } from "../../models/login-response";
+import { Button, Input } from "@nextui-org/react";
 
 const Login = () => {
     const authContext  = useContext<UserAuth | undefined>(AuthContext);//fill the data and manage it in AuthProvider.tsx
@@ -40,11 +41,19 @@ const Login = () => {
         }
     }
     return (
-        <div className="login">
-            <form onSubmit={(e) =>handleSubmit(e)}>
+        <div className="w-full flex flex-col gap-4 place-items-center p-8">
+            <form key={"sm"} className="flex w-4/12 flex-col md:flex-nowrap mb-6 md:mb-0 gap-4"
+                onSubmit={(e) =>handleSubmit(e)}>
+                <Input size={"md"} type="email" label="Email" placeholder="Enter your email"
+                     onChange={(event) =>setEmail(event.target.value)} />
+                <Input size={"md"} type="email" label="Password" placeholder="Enter your password"
+                    onChange={(event) =>setPassword(event.target.value)} />
+{/* 
                 <input type="text" onChange={(event) =>setEmail(event.target.value)}/>
-                <input type="text" onChange={(event) =>setPassword(event.target.value)}/>
-                <button>Log in</button>
+                <input type="text" onChange={(event) =>setPassword(event.target.value)}/> */}
+                <Button color="primary" variant="flat">
+                    Log in
+                </Button>
             </form>
         </div>
     );
