@@ -3,8 +3,8 @@ import "./navbar.css";
 import axios from "axios";
 import { User } from "../../models/user";
 import AuthContext from "../../context/AuthProvider";
-import { LoginResponse } from "../../models/login-response";
 import { UserAuth } from "../../models/types";
+import { LoginResponse } from "../../models/login-response";
 
 const Login = () => {
     const authContext  = useContext<UserAuth | undefined>(AuthContext);//fill the data and manage it in AuthProvider.tsx
