@@ -44,6 +44,7 @@ public class TokenService {
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 
+
     public RefreshToken createUUIDRefreshToken(User user) {
         RefreshToken refreshToken = new RefreshToken(
                 UUID.randomUUID().toString(),

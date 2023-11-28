@@ -11,9 +11,15 @@ const Restricted = ({authorities, children}:RestrictedProps) => {
     //check if authority exist and whether the case is true, render the children
     const renderChild =():JSX.Element | undefined =>{
         user?.authorities?.forEach((role: Role) => {
-            authorities.includes(role.authority!)
-                ? isAuthority = true : isAuthority = false;
-        });
+            if(isAuthority)return;//break the iteration if the authority is found
+            for(let i=0; i<authorities.length; i++){
+                if(role.authority === authorities[i]){
+                    isAuthority=true;
+                    break;
+                }
+            }
+        }
+        );
         if(isAuthority) return <div>{children}</div>
     }
     return (    

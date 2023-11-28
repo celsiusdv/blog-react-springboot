@@ -49,20 +49,11 @@ public class AuthenticationService {
             Authentication auth =//Authenticate the user for the ProviderManager in SecurityConfig.class, @Bean AuthenticationManager
                     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             if(auth.isAuthenticated()){
-<<<<<<< HEAD
-                String token = tokenService.generateJwt(auth);
-                //get the user with modified roles from the authentication manager after authentication
-                //check UserDetailsServiceImp -> mergeAuthorities() method to understand the roles modification
-                user= (User) auth.getPrincipal();
-                user.setToken(token);//this entity will have a token without persisting the token in the database
-                System.out.println(user);
-=======
                 user= (User) auth.getPrincipal();
                 token.setAccessToken(tokenService.createJwtAccessToken(user));
                 refreshToken=tokenService.createUUIDRefreshToken(user);
                 token.setRefreshToken(refreshToken.getRefreshToken());
                 log.info("authenticated user: "+ user);
->>>>>>> authBranch
             }
             return new LoginResponse(user, token.getAccessToken(), token.getRefreshToken());
         }catch (AuthenticationException e) { throw new UserNotFoundException("invalid user"); }
@@ -82,16 +73,11 @@ public class AuthenticationService {
 
     public User registerUser(String name, String email, String password) {
         Optional<User> existingUser = userRepository.findUserByEmail(email);
-<<<<<<< HEAD
-        if (existingUser.isPresent()) throw new RepeatedEmailException("This email is already in use");
-        else {
-=======
         if (existingUser.isPresent()) {
             log.error("email is already in use :(");
             throw new RepeatedEmailException("This email is already in use :(");
         }
         else {                                                        //to add an admin just replace "USER" by "ADMIN"
->>>>>>> authBranch
             User recordUser = new User(name, email, passwordEncoder.encode(password), userRole("USER"));
             return userRepository.save(recordUser);
         }
