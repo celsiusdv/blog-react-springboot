@@ -1,11 +1,12 @@
 import { User } from "./user";
 
-export interface LoginResponse{
+export type LoginResponse={
     user?:User;
     accessToken?:string;
     refreshToken?:string;
+    isLoggedIn?:boolean;
 }
-export interface Token{
+export type Token={
     accessToken:string;
     refreshToken:string;
 }

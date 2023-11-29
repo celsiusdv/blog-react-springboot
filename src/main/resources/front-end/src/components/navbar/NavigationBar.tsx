@@ -1,9 +1,12 @@
 
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Button} from "@nextui-org/react";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../../context/AuthProvider";
+import { UserAuth } from "../../models/types";
 
 
 const NavigationBar = () => {
+	const { auth }: UserAuth = useAuthContext();
 	return (
 		<Navbar position="sticky" isBlurred={true} className="bg-secondary-50">
 			<NavbarBrand >
@@ -21,15 +24,22 @@ const NavigationBar = () => {
 			</NavbarContent>
 
 			<NavbarContent justify="end">
+				{auth.isLoggedIn === undefined && <NavbarItem>
+														<Button as={Link} color="secondary" to="/signup" variant="flat">
+															Sign Up
+														</Button>
+													</NavbarItem>
+				}
 				<NavbarItem>
-					<Button as={Link} color="secondary" to="/signup" variant="flat">
-						Sign Up
-					</Button>
-				</NavbarItem>
-				<NavbarItem>
-					<Button as={Link} color="primary" to="/login" variant="flat">
-						Log in
-					</Button>
+					{auth.isLoggedIn === true ?
+						<Button as={Link} color="success" to="/login" variant="flat">
+							Logged in!
+						</Button>
+						:
+						<Button as={Link} color="primary" to="/login" variant="flat">
+							Log in
+						</Button>
+					}
 				</NavbarItem>
 			</NavbarContent>
 		</Navbar>

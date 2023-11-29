@@ -28,6 +28,7 @@ const Login = () => {
                 }
             );
             loginResponse=response.data;
+            loginResponse.isLoggedIn=true;
             authContext?.setAuth(loginResponse);
             console.log("request to the server-> ",body,"\nresponse from the server->",loginResponse);
         } catch (error:unknown) {
