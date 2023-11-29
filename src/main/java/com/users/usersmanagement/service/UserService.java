@@ -5,12 +5,13 @@ import com.users.usersmanagement.entity.User;
 import com.users.usersmanagement.exceptions.RepeatedEmailException;
 import com.users.usersmanagement.exceptions.UserNotFoundException;
 import com.users.usersmanagement.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @Service
 public class UserService {
     @Autowired
@@ -33,9 +34,11 @@ public class UserService {
         try{
             Optional<User> userToUpdate= Optional.of(
                     userRepository.getReferenceById(userId));//user from database to be replaced with new values
+            log.warn("old user to be updated: "+userToUpdate.get()+"\n by: "+user);
             userToUpdate.get().setName(user.getName());
             userToUpdate.get().setEmail(user.getUsername());//getUsername returns an email
-            userToUpdate.get().setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));//encrypt again after updating password
+            //encrypt again after updating password
+            userToUpdate.get().setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             return userRepository.save(userToUpdate.get());
         }catch (Exception e){
             throw e.getLocalizedMessage().contains("ConstraintViolationException")?

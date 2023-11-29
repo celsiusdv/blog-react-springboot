@@ -21,7 +21,9 @@ function App() {
 				<Route element={<RequireAuth authorities={["ADMIN"]}/>}>
 					<Route path='/admin-pane' element={<AdminPane />} />
 				</Route>
-				<Route path='/modify-user/:id' element={<ModifyUser />}/>
+				<Route element={<RequireAuth authorities={["ADMIN"]} />}>
+					<Route path='/modify-user/:id' element={<ModifyUser />} />{/*:id is the parameter used in AdminPane to delete or edit user*/}
+				</Route>
 			</Routes>
 
 		</BrowserRouter>

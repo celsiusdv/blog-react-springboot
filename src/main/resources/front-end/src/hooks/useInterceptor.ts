@@ -9,8 +9,9 @@ import useRefreshToken from "./useRefreshToken";
 const axiosPrivate = axios.create({
 	baseURL: 'http://localhost:8080',//spring boot api base url
 	headers: { 
-		'Content-Type': 'application/json',
-		"Access-Control-Allow-Credentials":true
+		"Accept": "application/json",
+		"Content-Type": "application/json",
+		"Access-Control-Allow-Credentials": true
 	 },
 });
 const useInterceptor = () => {

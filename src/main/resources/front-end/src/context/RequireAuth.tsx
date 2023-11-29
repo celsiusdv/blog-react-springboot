@@ -19,11 +19,11 @@ const RequireAuth = ({ authorities }: RoleProps) => {
                 for (let j = 0; j < authorities.length; j++) {
                     //compare the array of roles from the authenticated user against the RoleProps
                     if (role.authority === authorities[j]) {
-                        console.log("role detected: " + role.authority);
+                        //console.log("role detected: " + role.authority);
                         isRole = true;
                     }
                 }
-                console.log("is ", role.authority, " in props? ", isRole);
+                //console.log("is ", role.authority, " in props? ", isRole);
             });
             if(user === undefined || user === null) throw new Error("authentication not found, redirecting to login");
         } catch (error) {

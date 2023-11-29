@@ -29,8 +29,8 @@ public class TokenService {
     //6- generate an access token for the logged user if it is successfully authenticated
     public String createJwtAccessToken(User user){
         Instant now = Instant.now();
-        //Instant thirtyMinutes=ZonedDateTime.now().plusMinutes(30).toInstant();
-        Instant thirtyMinutes=ZonedDateTime.now().plusMinutes(1).toInstant();
+        Instant thirtyMinutes=ZonedDateTime.now().plusMinutes(30).toInstant();
+        //Instant thirtyMinutes=ZonedDateTime.now().plusMinutes(1).toInstant();
         String role = user.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
@@ -48,8 +48,8 @@ public class TokenService {
     public RefreshToken createUUIDRefreshToken(User user) {
         RefreshToken refreshToken = new RefreshToken(
                 UUID.randomUUID().toString(),
-                //ZonedDateTime.now().plusMinutes(1440).toInstant(),//24hs
-                ZonedDateTime.now().plusMinutes(4).toInstant(),
+                ZonedDateTime.now().plusMinutes(1440).toInstant(),//24hs
+                //ZonedDateTime.now().plusMinutes(4).toInstant(),
                 user);
         return refreshTokenRepository.save(refreshToken);//- saving the refresh token to a database
     }

@@ -57,10 +57,10 @@ const AdminPane = () => {
                         </Tooltip>
                         <Tooltip content="Edit user">
                             <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                                <Link to={{ pathname:`/modify-user/${user.userId}`, search:'?action=update',}}>
+                                <Link to={{ pathname:`/modify-user/${user.userId}`, search:`?action=update&user=${user.email}`,}}>
                                     <EditIcon onClick={
                                         () => {
-                                            console.log("user name: ", user.name, "id: " + user.userId);
+                                            console.log("from admin table: user name: ", user.name, "id: " + user.userId);
                                         }
                                     } />
                                 </Link>
@@ -68,11 +68,11 @@ const AdminPane = () => {
                         </Tooltip>
                         <Tooltip color="danger" content="Delete user" >
                             <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                                {/* using path params and query params to use in ModifyUser component */}
-                                <Link to={{ pathname:`/modify-user/${user.userId}`, search:'?action=delete',}}>
+                                {/* using path params(pathname:/??) and query params(search:'?action='??) to use in ModifyUser component */}
+                                <Link to={{ pathname:`/modify-user/${user.userId}`, search:`?action=delete&user=${user.email}`,}}>
                                     <DeleteIcon onClick={
                                         () => {
-                                            console.log("user name: ",user.name, "id: "+user.userId);
+                                            console.log("from admin table: user name: ",user.name, "id: "+user.userId);
                                         }
                                     } />
                                 </Link>

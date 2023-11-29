@@ -9,8 +9,8 @@ import { Button, Input } from "@nextui-org/react";
 
 const Login = () => {
     const authContext  = useContext<UserAuth | undefined>(AuthContext);//fill the data and manage it in AuthProvider.tsx
-    const [email,setEmail]=useState<string>("");
-    const [password,setPassword]=useState<string>("");
+    const [email,setEmail]=useState<string>("admin");
+    const [password,setPassword]=useState<string>("password");//default admin input just for testing purposes
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) =>{
         event.preventDefault();
@@ -30,7 +30,6 @@ const Login = () => {
             loginResponse=response.data;
             authContext?.setAuth(loginResponse);
             console.log("request to the server-> ",body,"\nresponse from the server->",loginResponse);
-
         } catch (error:unknown) {
             if(axios.isAxiosError(error)){
                 if(error.response?.status === 500){
@@ -44,14 +43,11 @@ const Login = () => {
         <div className="w-full flex flex-col gap-4 place-items-center p-8">
             <form key={"sm"} className="flex w-4/12 flex-col md:flex-nowrap mb-6 md:mb-0 gap-4"
                 onSubmit={(e) =>handleSubmit(e)}>
-                <Input size={"md"} type="email" label="Email" placeholder="Enter your email"
-                     onChange={(event) =>setEmail(event.target.value)} />
-                <Input size={"md"} type="email" label="Password" placeholder="Enter your password"
-                    onChange={(event) =>setPassword(event.target.value)} />
-{/* 
-                <input type="text" onChange={(event) =>setEmail(event.target.value)}/>
-                <input type="text" onChange={(event) =>setPassword(event.target.value)}/> */}
-                <Button color="primary" variant="flat">
+                <Input size={"md"} type="text" label="Email" placeholder="Enter your email"
+                     onChange={(event) =>setEmail(event.target.value)} value={email} />
+                <Input size={"md"} type="text" label="Password" placeholder="Enter your password"
+                    onChange={(event) =>setPassword(event.target.value)} value={password} />
+                <Button color="primary" variant="flat" type="submit">
                     Log in
                 </Button>
             </form>

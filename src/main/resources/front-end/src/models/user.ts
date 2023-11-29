@@ -9,7 +9,6 @@ export interface User{
     email?:string;
     password?:string;
     authorities?:Array<Role>;
-    token?:string;
 }
 export interface Role{
     authority?:string;

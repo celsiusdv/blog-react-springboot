@@ -98,7 +98,7 @@ const Register = () => {
                 <Input size={"md"} type="text" label="Confirm Password" placeholder="Confirm your password"
                     isRequired={requiredMatch} onChange={(event) => handleRequiredMatch(event)} />
 
-                <Button color="secondary" variant="flat">
+                <Button color="secondary" variant="flat" type="submit">
                     Sign Up
                 </Button>
             </form>
