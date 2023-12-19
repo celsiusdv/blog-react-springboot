@@ -1,7 +1,11 @@
 package com.users.usersmanagement;
 
+import com.users.usersmanagement.entity.Blog;
+import com.users.usersmanagement.service.BlogService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class Main {
@@ -11,10 +15,9 @@ public class Main {
 	}
 
 /*	@Bean
-	public CommandLineRunner commandLineRunner(PermissionRepository permissionRepository){
+	public CommandLineRunner commandLineRunner(BlogService blogService){
 		return args -> {
-			Set<Permission> list= new HashSet<>(permissionRepository.findAll());
-			System.out.println(Arrays.toString(list.toArray()));
+			System.out.println(blogService.createBlog(new Blog("this is a blog test"),1));
 		};
 	}*/
 }

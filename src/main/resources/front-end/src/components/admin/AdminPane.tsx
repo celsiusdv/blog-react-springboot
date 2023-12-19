@@ -20,7 +20,7 @@ const columns:column[] = [
 
 const AdminPane = () => {
     let usersTable:UserTable[]=[];//array for the table
-    const {data:users}:FetchedData=useFetch("/users/api/user");
+    const {data:users}:FetchedData=useFetch("/api/users/user");
     users.forEach((user:User,i) =>{
         usersTable.push({
             userId: user.userId!,

@@ -19,7 +19,7 @@ const ModifyUser = () => {
     useEffect(() => {
         const getUser = async () => {
             try {
-                const response = await axiosPrivate.get<User>(`/users/api/user/${queryUser}`);
+                const response = await axiosPrivate.get<User>(`/api/users/user/${queryUser}`);
                 console.log(response.data, " get user by email");
                 setName(response.data.name!);
                 setEmail(response.data.email!);
@@ -37,10 +37,10 @@ const ModifyUser = () => {
         console.log(user);
         try {
             if (queryAction === "update") {
-                const response = await axiosPrivate.put<User>(`/users/api/user/${id}`,user);
+                const response = await axiosPrivate.put<User>(`/api/users/user/${id}`,user);
                 console.log(response.data, " udpated user");
             } else {
-                await axiosPrivate.delete<User>(`/users/api/user/${id}`);
+                await axiosPrivate.delete<User>(`/api/users/user/${id}`);
                 console.log("clicked in delete");
             }
         } catch (error) {

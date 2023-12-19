@@ -42,6 +42,12 @@ public class User implements UserDetails{
                     foreignKey = @ForeignKey(name = "fk_role_id")))
     private Set<Role> authorities;
 
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    private List<Blog> blogs=new ArrayList<>();
+
+
     public User(){}
     public User(String email, String password, Set<Role> authorities){
         this.email=email;
@@ -55,6 +61,7 @@ public class User implements UserDetails{
         this.authorities=authorities;
     }
 
+
     public void setName(String name){
         this.name=name;
     }
@@ -67,13 +74,12 @@ public class User implements UserDetails{
     public void setAuthorities(Set<Role> authorities){
         this.authorities=authorities;
     }
+    //set blogs
 
 
     public Integer getUserId(){ return this.userId; }
     public String getName(){ return this.name; }
     public String getEmail() {return this.email;}
-
-
     @JsonIgnore //hide password on request. use @JsonProperty in the instance field variable declaration
     public String getPassword(){ return this.password; }
     @Override
@@ -89,11 +95,13 @@ public class User implements UserDetails{
         return roles;
     }
 
+    //get blogs
     @Override public String getUsername(){ return this.getEmail(); }
     @Override @JsonIgnore public boolean isAccountNonExpired() {return true;}
     @Override @JsonIgnore public boolean isAccountNonLocked() {return true;}
     @Override @JsonIgnore public boolean isCredentialsNonExpired() {return true;}
     @Override @JsonIgnore public boolean isEnabled() {return true;}
+
 
     @Override
     public String toString() {

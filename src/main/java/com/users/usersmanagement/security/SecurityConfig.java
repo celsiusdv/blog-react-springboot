@@ -13,6 +13,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -31,6 +32,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
     @Autowired
     private KeyProperties keys;
@@ -50,9 +52,9 @@ public class SecurityConfig {
         http.authorizeRequests(auth -> {
             //the order of the antMatcher's positions is important, whether the first role is discarded
             //it will jump in the next block without trying the others below
-            auth.antMatchers("/authentication/api/**").permitAll();
-            auth.antMatchers(HttpMethod.PUT,"/users/api/**").hasAnyRole("ADMIN_edit","USER_edit");
-            auth.antMatchers("/users/api/**").hasRole("ADMIN");
+            auth.antMatchers("/api/authentication/**").permitAll();
+            auth.antMatchers(HttpMethod.PUT,"/api/users/**").hasAnyRole("ADMIN_edit","USER_edit");
+            auth.antMatchers("/api/users/**").hasRole("ADMIN");
             auth.anyRequest().authenticated();
         });
         http.oauth2ResourceServer(oAuth2 -> {

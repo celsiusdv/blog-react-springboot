@@ -26,6 +26,7 @@ public class Role implements GrantedAuthority {
     private Set<Privilege> privileges=new HashSet<>();
 
     public Role(){}
+    public Role(String authority){ this.authority=authority;}
 
     public void setRoleId(Integer roleId){ this.roleId=roleId; }
     public void setAuthority(String authority){ this.authority=authority; }

@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/authentication/api")
+@RequestMapping(path = "/api/authentication")
 @CrossOrigin(origins = "http://localhost:3000")
 public class AuthenticationController {
 

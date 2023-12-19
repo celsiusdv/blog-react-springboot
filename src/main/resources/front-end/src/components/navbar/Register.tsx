@@ -58,7 +58,7 @@ const Register = () => {
         console.log("saving... ", user);
 
         try {        //wait until the fetching is complete          
-            const response = await axios.post<User>("http://localhost:8080/authentication/api/register",
+            const response = await axios.post<User>("http://localhost:8080/api/authentication/register",
             user,//object to send to the server
                 {
                     headers: { 

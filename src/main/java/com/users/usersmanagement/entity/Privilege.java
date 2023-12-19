@@ -12,6 +12,7 @@ public class Privilege {
     private String privilege;
 
     public Privilege(){}
+    public Privilege(String privilege){this.privilege=privilege;}
     //overloading constructor to fetch specific column data in jpql query in PermissionRepository
     public Privilege(Integer privilegeId, String privilege){
         this.privilegeId=privilegeId;
