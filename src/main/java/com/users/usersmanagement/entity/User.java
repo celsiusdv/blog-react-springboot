@@ -74,7 +74,7 @@ public class User implements UserDetails{
     public void setAuthorities(Set<Role> authorities){
         this.authorities=authorities;
     }
-    //set blogs
+    //set blogs method
 
 
     public Integer getUserId(){ return this.userId; }
@@ -95,7 +95,7 @@ public class User implements UserDetails{
         return roles;
     }
 
-    //get blogs
+    //get blogs method
     @Override public String getUsername(){ return this.getEmail(); }
     @Override @JsonIgnore public boolean isAccountNonExpired() {return true;}
     @Override @JsonIgnore public boolean isAccountNonLocked() {return true;}

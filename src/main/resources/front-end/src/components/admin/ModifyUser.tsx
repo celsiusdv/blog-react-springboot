@@ -4,12 +4,13 @@ import useInterceptor from "../../hooks/useInterceptor";
 import { User } from "../../models/user";
 import { FormEvent, useEffect, useState } from "react";
 import axios from "axios";
+import { Button, Input } from "@nextui-org/react";
 
 const ModifyUser = () => {
     const axiosPrivate = useInterceptor();
     const { id } = useParams<userId>();//get the route params '/modify-user/:id' from App.tsx, then the value from AdminPane.tsx
     const location= useLocation();
-    //get the query params from AdminPane.tsx set in the action buttons
+    //get the query params from AdminPane.tsx from the action buttons
     const queryAction:string|null = new URLSearchParams(location.search).get('action');
     const queryUser:string|null = new URLSearchParams(location.search).get('user');
     const[name, setName]=useState<string>("");
@@ -51,21 +52,22 @@ const ModifyUser = () => {
     return ( 
         <div>
             {queryAction} user with id: {id} and email: {queryUser}
-            <form onSubmit={(e) =>handleSubmit(e)}>
-                <br />
-                <input type="text" value={name} onChange={(e) => {
-                    setName(e.target.value);
-                }} />
-                <br />
-                <input type="email" value={email} onChange={(e) => {
-                    setEmail(e.target.value);
-                }} />
-                <br />
-                {queryAction ==="update" && <input type="text" value={password} onChange={(e) => {
-                    setPassword(e.target.value);
-                }} />}
-                <br />
-                <button >{queryAction}</button>
+            <form onSubmit={(e) => handleSubmit(e)}>
+                {queryAction === "update" ?
+                    <div>
+                        <br />
+                        <Input size={"md"} type="text" label="User Name" placeholder="Enter your name" value={name} onChange={(e) => {setName(e.target.value); }} />
+                        <br />
+                        <Input size={"md"} type="text" label="Email" placeholder="Enter your email" value={email} onChange={(e) => { setEmail(e.target.value); }} />
+                        <br />
+                        <Input size={"md"} type="text" label="Password" placeholder="Enter your new password" value={password} onChange={(e) => { setPassword(e.target.value); }} />
+                        <br />
+                        <Button >{queryAction}</Button>
+                    </div> :
+                    <div>
+                        <Input size={"md"} type="text" label="User Name" disabled value={name} onChange={(e) => {setName(e.target.value); }} />
+                        <Button >{queryAction}</Button>
+                    </div>}
             </form>
         </div>
     );

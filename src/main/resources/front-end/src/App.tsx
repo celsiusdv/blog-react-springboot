@@ -8,6 +8,7 @@ import AdminPane from './components/admin/AdminPane';
 import ModifyUser from './components/admin/ModifyUser';
 import Login from './components/navbar/Login';
 import RequireAuth from './context/RequireAuth';
+import BlogView from './components/blog/BlogView';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
 				<Route element={<RequireAuth authorities={["ADMIN"]} />}>
 					<Route path='/modify-user/:id' element={<ModifyUser />} />{/*:id is the parameter used in AdminPane to delete or edit user*/}
 				</Route>
+				<Route path='/blog-view/:blogId' element={<BlogView />} />{/*id filled in BlogList.tsx*/}
 			</Routes>
 
 		</BrowserRouter>

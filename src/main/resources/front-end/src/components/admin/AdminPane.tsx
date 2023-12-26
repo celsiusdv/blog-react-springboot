@@ -88,7 +88,7 @@ const AdminPane = () => {
 
     return (
         <div className="flex flex-col gap-4">
-            <div className="flex justify-between gap-3 items-end mt-2 ml-4">
+            <div className="flex justify-between gap-3 items-end mt-5 ml-4">
                 <Input isClearable className="w-full sm:max-w-[44%]" placeholder="Search by email..."
                     startContent={<SearchIcon />} />
             </div>

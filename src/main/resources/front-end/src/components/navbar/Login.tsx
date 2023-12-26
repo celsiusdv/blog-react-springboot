@@ -6,8 +6,10 @@ import AuthContext from "../../context/AuthProvider";
 import { UserAuth } from "../../models/types";
 import { LoginResponse } from "../../models/login-response";
 import { Button, Input } from "@nextui-org/react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate();
     const authContext  = useContext<UserAuth | undefined>(AuthContext);//fill the data and manage it in AuthProvider.tsx
     const [email,setEmail]=useState<string>("admin");
     const [password,setPassword]=useState<string>("password");//default admin input just for testing purposes
@@ -31,6 +33,7 @@ const Login = () => {
             loginResponse.isLoggedIn=true;
             authContext?.setAuth(loginResponse);
             console.log("request to the server-> ",body,"\nresponse from the server->",loginResponse);
+            navigate(-1);
         } catch (error:unknown) {
             if(axios.isAxiosError(error)){
                 if(error.response?.status === 500){
@@ -40,8 +43,8 @@ const Login = () => {
             }
         }
     }
-    return (
-        <div className="w-full flex flex-col gap-4 place-items-center p-8">
+    return (//w-full flex flex-col gap-4 place-items-center p-8
+        <div className="w-full h-screen flex flex-col gap-4 place-items-center p-8">
             <form key={"sm"} className="flex w-4/12 flex-col md:flex-nowrap mb-6 md:mb-0 gap-4"
                 onSubmit={(e) =>handleSubmit(e)}>
                 <Input size={"md"} type="text" label="Email" placeholder="Enter your email"

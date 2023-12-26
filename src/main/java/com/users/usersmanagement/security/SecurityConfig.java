@@ -30,6 +30,9 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.PUT;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -53,7 +56,8 @@ public class SecurityConfig {
             //the order of the antMatcher's positions is important, whether the first role is discarded
             //it will jump in the next block without trying the others below
             auth.antMatchers("/api/authentication/**").permitAll();
-            auth.antMatchers(HttpMethod.PUT,"/api/users/**").hasAnyRole("ADMIN_edit","USER_edit");
+            auth.antMatchers(GET,"/api/blogs/**").permitAll();
+            auth.antMatchers(PUT,"/api/users/**").hasAnyRole("ADMIN_edit","USER_edit");
             auth.antMatchers("/api/users/**").hasRole("ADMIN");
             auth.anyRequest().authenticated();
         });

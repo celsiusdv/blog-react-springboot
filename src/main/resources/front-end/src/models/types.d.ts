@@ -1,8 +1,13 @@
 import { LoginResponse } from "./login-response";
 import { Role } from "./user";
 
-type FetchedData = {//typechecking for users from useFetch
+type FetchedData = {//typechecking for users using useFetch in AdminPane.tsx
     data: User[];
+    isLoading: Boolean;
+    error: string | unknown;
+};
+type FetchedBlogs = {//typechecking for blogs from useFetch Home.tsx
+    data: Blog[];
     isLoading: Boolean;
     error: string | unknown;
 };
@@ -21,6 +26,7 @@ type UserAuth = {//typechecking to set props value in AuthContext.Provider
     setAuth: React.Dispatch<React.SetStateAction<LoginResponse>>;
 };
 
+//-----props ///////////////////
 type AuthContextProps = {//props to set in AuthProvider.tsx
     children: React.ReactNode;
 };
@@ -30,6 +36,9 @@ type RoleProps={// props to set in RequireAuth.tsx
 type RestrictedProps={//props to set in Restricted.tsx
     authorities:string[];
     children: React.ReactNode;
+}
+type BlogProps={//props to set in BlogList.tsx
+    blogs:Blogs[];
 }
 
 //////////////////////////////////////////////

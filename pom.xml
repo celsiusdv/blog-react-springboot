@@ -11,7 +11,7 @@
 	<groupId>com.users</groupId>
 	<artifactId>blog-react-springboot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>users-management-crud</name>
+	<name>blog-management-crud</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>

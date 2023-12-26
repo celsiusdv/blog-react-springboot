@@ -8,7 +8,7 @@ import { UserAuth } from "../../models/types";
 const NavigationBar = () => {
 	const { auth }: UserAuth = useAuthContext();
 	return (
-		<Navbar position="sticky" isBlurred={true} className="bg-secondary-50">
+		<Navbar position="sticky" isBlurred={true} className="bg-secondary-50 navbar">
 			<NavbarBrand >
 				<Link to="/" >
 					<p className="font-bold text-inherit text-gray-300 text-3xl">Blog Sample</p>

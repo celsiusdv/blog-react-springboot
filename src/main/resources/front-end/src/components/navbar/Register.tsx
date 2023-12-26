@@ -80,7 +80,7 @@ const Register = () => {
         }
     }
     return (
-        <div className="w-full flex flex-col gap-4 place-items-center p-8">{/* main panel */}
+        <div className="w-full h-screen flex flex-col gap-4 place-items-center p-8">{/* main panel */}
             <h2>Register User</h2>
             <form key={"sm"} className="flex w-4/12 flex-col md:flex-nowrap mb-6 md:mb-0 gap-4"
                 onSubmit={(e) =>handleSubmit(e)}>
@@ -91,7 +91,6 @@ const Register = () => {
                 <Input size={"md"} type="email" label="Email" placeholder="Enter your email"
                     isRequired={requiredEmail} onChange={(event) =>handleRequiredEmail(event)}/>
 
-                 {/* TODO:change type to password later */}
                 <Input size={"md"} type="text" label="Password" placeholder="Enter your password"
                     isRequired={requiredPassword} onChange={(event) =>handleRequiredPassword(event)}/>
 
