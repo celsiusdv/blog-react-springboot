@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Blog } from "../../models/blog";
 import useInterceptor from "../../hooks/useInterceptor";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
@@ -11,6 +11,7 @@ import Restricted from "../../context/Restricted";
 
 const BlogView = () => {
     const axiosPrivate = useInterceptor();
+    const navigate = useNavigate();
     const { auth }: UserAuth = useAuthContext();
     const { blogId } = useParams();//get route params <Route path='/blog-view/:blogId' from App.tsx
     const [edit, setEdit]= useState<boolean>(false);
@@ -53,6 +54,16 @@ const BlogView = () => {
             console.log(error);
         }
     }
+    const handleDelete = async() =>{
+        try {
+            const response = await axiosPrivate.delete<Blog>(`/api/blogs/blog/${blogId}`);
+            navigate(-1);
+            console.log(response.status);
+        } catch (error) {
+            if (axios.isAxiosError(error)) console.log(error.message);
+            console.log(error);
+        }
+    }
     return ( 
         <div className="blog-container">
             
@@ -73,7 +84,7 @@ const BlogView = () => {
             
             <div className="management-pane">
                 <Restricted authorities={["ADMIN_edit", "USER_edit"]}>
-                    <BlogManagement isEditable={edit} setEditable={setEdit} user={auth.user!} />
+                    <BlogManagement isEditable={edit} setEditable={setEdit} user={auth.user!} onDelete={handleDelete} />
                 </Restricted>
             </div>
             

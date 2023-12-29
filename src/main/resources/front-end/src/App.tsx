@@ -9,6 +9,7 @@ import ModifyUser from './components/admin/ModifyUser';
 import Login from './components/navbar/Login';
 import RequireAuth from './context/RequireAuth';
 import BlogView from './components/blog/BlogView';
+import CreateBlog from './components/blog/CreateBlog';
 
 function App() {
 
@@ -20,10 +21,13 @@ function App() {
 				<Route path='/signup' element={<Register />} />
 				<Route path='/login' element={<Login />} />
 				<Route element={<RequireAuth authorities={["ADMIN"]}/>}>
-					<Route path='/admin-pane' element={<AdminPane />} />
+					<Route path='/admin-pane' element={<AdminPane />} />{/*SET ADMIN PANE VISIBLE FOR AUTHENTICATED USERS */}
 				</Route>
 				<Route element={<RequireAuth authorities={["ADMIN"]} />}>
 					<Route path='/modify-user/:id' element={<ModifyUser />} />{/*:id is the parameter used in AdminPane to delete or edit user*/}
+				</Route>
+				<Route element={<RequireAuth authorities={["ADMIN_create","USER_create"]}/>}>
+					<Route path='/create-blog' element={<CreateBlog />} />
 				</Route>
 				<Route path='/blog-view/:blogId' element={<BlogView />} />{/*id filled in BlogList.tsx*/}
 			</Routes>

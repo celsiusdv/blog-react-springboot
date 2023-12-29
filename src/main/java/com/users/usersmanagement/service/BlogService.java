@@ -27,6 +27,9 @@ public class BlogService {
         if(blogRepository.findAll().isEmpty()) throw new RuntimeException("empty list of blogs");
         else return blogRepository.findAll();
     }
+    public List<Blog> searchBlogs(){
+        return null;
+    }
 
     public Blog getBlog(Integer id){
         Optional<Blog> blog=blogRepository.findById(id);

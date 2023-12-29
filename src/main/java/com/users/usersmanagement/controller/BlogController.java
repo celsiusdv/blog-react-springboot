@@ -45,6 +45,6 @@ public class BlogController {
     @DeleteMapping(path = "/blog/{id}")
     public ResponseEntity<Boolean> deleteBlog(@PathVariable("id") Integer id){
         return blogService.deleteBlog(id) ? new ResponseEntity<>(HttpStatus.OK) :
-                new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

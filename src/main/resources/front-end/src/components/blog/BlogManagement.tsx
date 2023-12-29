@@ -7,8 +7,9 @@ type onClickProps={
     isEditable: boolean;
     setEditable: Dispatch<React.SetStateAction<boolean>>;
     user:User;
+    onDelete: () => void;
 }
-const BlogManagement = ({isEditable, setEditable, user}:onClickProps) => {
+const BlogManagement = ({isEditable, setEditable, user, onDelete}:onClickProps) => {
     return ( 
         <div>
             <Card className="max-w-[400px]" >
@@ -25,7 +26,7 @@ const BlogManagement = ({isEditable, setEditable, user}:onClickProps) => {
                 <Divider />
                 <CardFooter>
                     <Restricted authorities={["ADMIN_delete"]}>
-                        <Button className="ml-4" color="danger" variant="flat">Delete </Button>
+                        <Button className="ml-4" color="danger" variant="flat" onClick={onDelete}>Delete </Button>
                     </Restricted>
                     { !isEditable ?
                         <Button className="ml-5"color="warning" variant="flat" 

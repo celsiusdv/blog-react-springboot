@@ -15,7 +15,8 @@ root.render(
         <NextUIProvider>
             <NextThemesProvider attribute="class" defaultTheme="dark">
                 <AuthProvider>
-                    <main className="dark text-foreground bg-content1 h-full">
+                                                      {/*dark gray bg*/}
+                    <main className="dark text-foreground bg-content1 min-h-screen">
                         <App />
                     </main>
                 </AuthProvider>

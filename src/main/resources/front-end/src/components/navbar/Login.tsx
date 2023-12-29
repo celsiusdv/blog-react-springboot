@@ -44,7 +44,8 @@ const Login = () => {
         }
     }
     return (//w-full flex flex-col gap-4 place-items-center p-8
-        <div className="w-full h-screen flex flex-col gap-4 place-items-center p-8">
+        <div className="w-full flex flex-col gap-4 place-items-center p-8">
+            <h1>Log In</h1>
             <form key={"sm"} className="flex w-4/12 flex-col md:flex-nowrap mb-6 md:mb-0 gap-4"
                 onSubmit={(e) =>handleSubmit(e)}>
                 <Input size={"md"} type="text" label="Email" placeholder="Enter your email"

@@ -1,8 +1,9 @@
 
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Button} from "@nextui-org/react";
+import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Button, Chip} from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthProvider";
 import { UserAuth } from "../../models/types";
+import { EditIcon } from "../icons/EditIcon";
 
 
 const NavigationBar = () => {
@@ -11,14 +12,26 @@ const NavigationBar = () => {
 		<Navbar position="sticky" isBlurred={true} className="bg-secondary-50 navbar">
 			<NavbarBrand >
 				<Link to="/" >
-					<p className="font-bold text-inherit text-gray-300 text-3xl">Blog Sample</p>
+					<p className="font-bold text-inherit text-gray-300 text-2xl pr-20">A simple blog demo</p>
 				</Link>
 			</NavbarBrand>
 
 			<NavbarContent className="hidden sm:flex gap-4" justify="start">
-				<NavbarItem>
+				<NavbarItem className="ml-2">
 					<Link color="foreground" to="/admin-pane">
-						Admin Features
+						<Chip color="primary" variant="shadow">
+							Admin Control
+						</Chip>
+					</Link>
+				</NavbarItem>
+			</NavbarContent>
+
+			<NavbarContent className="hidden sm:flex gap-4" justify="start">
+				<NavbarItem>
+					<Link color="foreground" to="/create-blog">
+						<Chip color="success" variant="shadow" startContent={<EditIcon />} >
+							Create Blog
+						</Chip>
 					</Link>
 				</NavbarItem>
 			</NavbarContent>

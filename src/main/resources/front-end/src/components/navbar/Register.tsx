@@ -80,8 +80,8 @@ const Register = () => {
         }
     }
     return (
-        <div className="w-full h-screen flex flex-col gap-4 place-items-center p-8">{/* main panel */}
-            <h2>Register User</h2>
+        <div className="w-full flex flex-col gap-4 place-items-center p-8">{/* main panel */}
+            <h1>Register User</h1>
             <form key={"sm"} className="flex w-4/12 flex-col md:flex-nowrap mb-6 md:mb-0 gap-4"
                 onSubmit={(e) =>handleSubmit(e)}>
 
