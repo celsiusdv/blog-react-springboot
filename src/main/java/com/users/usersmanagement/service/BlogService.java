@@ -7,6 +7,7 @@ import com.users.usersmanagement.exceptions.UserNotFoundException;
 import com.users.usersmanagement.repository.BlogRepository;
 import com.users.usersmanagement.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MarkerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -27,8 +31,18 @@ public class BlogService {
         if(blogRepository.findAll().isEmpty()) throw new RuntimeException("empty list of blogs");
         else return blogRepository.findAll();
     }
-    public List<Blog> searchBlogs(){
-        return null;
+
+    public List<Blog> searchBlogs(String wordsToRegex){
+        List<String> words= Stream.of(wordsToRegex.split(" "))
+                .map(String::trim)
+                .collect(Collectors.toList());
+        log.info("\u001B[35mwords from the client mapped to array: "+words+"\u001B[0m");
+        String regex= IntStream.range(0, words.size())
+                .filter( i -> i < words.size())
+                .mapToObj(i -> "(?=.*[[:<:]]("+words.get(i)+")[[:>:]])")
+                .collect(Collectors.joining("|","(?i)^",".*"));
+        return blogRepository.searchBlogs(regex)
+                .orElseThrow( () ->new RuntimeException("wrong request"));
     }
 
     public Blog getBlog(Integer id){

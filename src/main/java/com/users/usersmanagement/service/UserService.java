@@ -34,7 +34,7 @@ public class UserService {
         try{
             Optional<User> userToUpdate= Optional.of(
                     userRepository.getReferenceById(userId));//user from database to be replaced with new values
-            log.warn("old user to be updated: "+userToUpdate.get()+"\n by: "+user);
+            log.warn("\u001B[35mold user to be updated: "+userToUpdate.get()+"\n by: "+user+"\u001B[0m");
             userToUpdate.get().setName(user.getName());
             userToUpdate.get().setEmail(user.getUsername());//getUsername returns an email
             //encrypt again after updating password

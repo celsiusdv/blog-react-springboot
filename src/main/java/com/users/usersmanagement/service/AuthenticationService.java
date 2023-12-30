@@ -91,11 +91,11 @@ public class AuthenticationService {
             Optional<RefreshToken> checkToken=tokenService.findRefreshToken(refreshTokenRequest);
             if(checkToken.isPresent() && refreshTokenRequest != null){
                 refreshToken= checkToken.get();
-                log.info("user with token id:"+refreshToken.getRefreshTokenId()+" is requesting a refresh");
+                log.info("\u001B[35muser with token id:"+refreshToken.getRefreshTokenId()+" is requesting a refresh"+"\u001B[0m");
                 //returns a token (which contains a user), or an exception if it has expired
                 user=tokenService.verifyExpiration(refreshToken).getUser();
                 accessToken = tokenService.createJwtAccessToken(user);
-                log.info("generated new access token: "+accessToken);
+                log.info("\u001B[35mgenerated new access token: "+accessToken+"\u001B[0m");
             } else throw new TokenException("invalid token or user is null");
         }catch(Exception e){
             log.error(e.getMessage());

@@ -65,7 +65,7 @@ public class TokenService {
                 refreshTokenRepository.delete(token);
                 throw new TokenException("Refresh token: "+token.getRefreshToken()+" was expired. Please make a new signin request");
             } else {
-                log.info("checking token expiration...\nrefresh token still valid! :D");
+                log.info("\u001B[35m"+"checking token expiration...\nrefresh token still valid! :D"+"\u001B[0m");
                 return token;
             }
         }catch (Exception e){

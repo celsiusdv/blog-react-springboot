@@ -1,4 +1,4 @@
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input, Tooltip } from "@nextui-org/react";
 import { useAuthContext } from "../../context/AuthProvider";
 import Restricted from "../../context/Restricted";
 import { useFetch } from "../../hooks/useFetch";
@@ -7,21 +7,27 @@ import { FetchedBlogs, UserAuth } from "../../models/types";
 import BlogList from "../blog/BlogList";
 import { SearchIcon } from "../icons/SearchIcon";
 import "./home.css";
+import { useEffect, useRef, useState } from "react";
 
 
 const Home = () => {
     const { auth }: UserAuth = useAuthContext();
-    const {data:blogs}:FetchedBlogs=useFetch("/api/blogs/blogs");
-    const search =() =>{
-        
-    }
+    const [url,setUrl]=useState("/api/blogs/blogs");
+    const {data:blogs}:FetchedBlogs=useFetch(url);
+    let browse=useRef<string>("");
+    const search =() =>setUrl(`/api/blogs/blogs/${browse.current}`);
+// TODO: ADD PAGINATOR
+    
     return ( 
         <div className="home" tabIndex={0}>
-            <Input isClearable className="w-full sm:max-w-[44%] m-5" placeholder="Search specific blog..."
-                startContent={<SearchIcon />} onKeyDown={ (e) => {
-                    e.key === "Enter" && console.log(e.key);
-                }} />
-            
+            <Tooltip showArrow={true} content="click in the search icon or press enter to search">
+                <Input className="w-full sm:max-w-[44%] m-7 search-input" isClearable placeholder="Search blogs"
+                    startContent={<SearchIcon className={"search-icon"}
+                                            onClick={() => search()} />}
+                                            onKeyDown={(e) => e.key === "Enter" && search()}
+                                            onChange={(e) => browse.current = e.target.value} />
+            </Tooltip>
+
             <BlogList blogs={blogs} />
         </div>
      );

@@ -23,6 +23,11 @@ public class BlogController {
         return new ResponseEntity<>(blogService.getBlogs(),HttpStatus.OK);
     }
 
+    @GetMapping(path = "/blogs/{search}")
+    public ResponseEntity<List<Blog>>searchBlogs(@PathVariable("search") String search){
+        return new ResponseEntity<>(blogService.searchBlogs(search),HttpStatus.OK);
+    }
+
     @GetMapping(path = "/blog/{id}")
     public ResponseEntity<Blog>getBlog(@PathVariable("id") Integer id){
         return new ResponseEntity<>(blogService.getBlog(id),HttpStatus.OK);

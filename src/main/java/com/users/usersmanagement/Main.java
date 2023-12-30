@@ -17,7 +17,8 @@ public class Main {
 /*	@Bean
 	public CommandLineRunner commandLineRunner(BlogService blogService){
 		return args -> {
-			System.out.println(blogService.createBlog(new Blog("this is a blog test"),1));
+			//System.out.println(blogService.createBlog(new Blog("this is a blog test"),1));
+			System.out.println(blogService.searchBlogs("asdf debian hello security"));
 		};
 	}*/
 }
