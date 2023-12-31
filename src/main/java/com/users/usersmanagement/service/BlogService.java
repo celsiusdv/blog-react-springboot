@@ -9,6 +9,8 @@ import com.users.usersmanagement.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MarkerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,21 +29,30 @@ public class BlogService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<Blog> getBlogs(){
+    public List<Blog> getBlogs(Integer page){
         if(blogRepository.findAll().isEmpty()) throw new RuntimeException("empty list of blogs");
-        else return blogRepository.findAll();
+        else{
+            PageRequest pageRequest=PageRequest.of((page-1),4);
+            log.info("\u001B[35mgetBlogs() page requested: "+(page-1)+"\u001B[0m");
+            Page<Blog> pages =blogRepository.findAll(pageRequest);
+            return pages.getContent();
+        }
     }
 
-    public List<Blog> searchBlogs(String wordsToRegex){
+    public List<Blog> searchBlogs(String wordsToRegex,Integer page){
         List<String> words= Stream.of(wordsToRegex.split(" "))
                 .map(String::trim)
                 .collect(Collectors.toList());
         log.info("\u001B[35mwords from the client mapped to array: "+words+"\u001B[0m");
+
         String regex= IntStream.range(0, words.size())
                 .filter( i -> i < words.size())
                 .mapToObj(i -> "(?=.*[[:<:]]("+words.get(i)+")[[:>:]])")
                 .collect(Collectors.joining("|","(?i)^",".*"));
-        return blogRepository.searchBlogs(regex)
+
+        PageRequest pageRequest=PageRequest.of(page-1,2);
+        log.info("\u001B[35msearch() page requested: "+(page-1)+"\u001B[0m");
+        return blogRepository.searchBlogs(regex,pageRequest)
                 .orElseThrow( () ->new RuntimeException("wrong request"));
     }
 

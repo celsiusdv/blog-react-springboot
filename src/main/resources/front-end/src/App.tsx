@@ -20,7 +20,7 @@ function App() {
 				<Route path='/' index element={<Home />} />{/* path to the Home component */}
 				<Route path='/signup' element={<Register />} />
 				<Route path='/login' element={<Login />} />
-				<Route element={<RequireAuth authorities={["ADMIN"]}/>}>
+				<Route element={<RequireAuth authorities={["ADMIN_read","USER_read"]}/>}>
 					<Route path='/admin-pane' element={<AdminPane />} />{/*SET ADMIN PANE VISIBLE FOR AUTHENTICATED USERS */}
 				</Route>
 				<Route element={<RequireAuth authorities={["ADMIN"]} />}>

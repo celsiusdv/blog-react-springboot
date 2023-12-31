@@ -1,4 +1,4 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { userId } from "../../models/types";
 import useInterceptor from "../../hooks/useInterceptor";
 import { User } from "../../models/user";
@@ -10,6 +10,7 @@ const ModifyUser = () => {
     const axiosPrivate = useInterceptor();
     const { id } = useParams<userId>();//get the route params '/modify-user/:id' from App.tsx, then the value from AdminPane.tsx
     const location= useLocation();
+    const navigate = useNavigate();
     //get the query params from AdminPane.tsx from the action buttons
     const queryAction:string|null = new URLSearchParams(location.search).get('action');
     const queryUser:string|null = new URLSearchParams(location.search).get('user');
@@ -39,10 +40,10 @@ const ModifyUser = () => {
         try {
             if (queryAction === "update") {
                 const response = await axiosPrivate.put<User>(`/api/users/user/${id}`,user);
-                console.log(response.data, " udpated user");
-            } else {
-                await axiosPrivate.delete<User>(`/api/users/user/${id}`);
-                console.log("clicked in delete");
+                navigate(-1);
+            } else if (queryAction === "delete") {
+                const response=await axiosPrivate.delete<User>(`/api/users/user/${id}`);
+                navigate(-1);
             }
         } catch (error) {
             if(axios.isAxiosError(error))console.log(error.message);
@@ -62,11 +63,11 @@ const ModifyUser = () => {
                         <br />
                         <Input size={"md"} type="text" label="Password" placeholder="Enter your new password" value={password} onChange={(e) => { setPassword(e.target.value); }} />
                         <br />
-                        <Button >{queryAction}</Button>
+                        <Button type="submit">{queryAction}</Button>
                     </div> :
                     <div>
                         <Input size={"md"} type="text" label="User Name" disabled value={name} onChange={(e) => {setName(e.target.value); }} />
-                        <Button >{queryAction}</Button>
+                        <Button type="submit">{queryAction}</Button>
                     </div>}
             </form>
         </div>

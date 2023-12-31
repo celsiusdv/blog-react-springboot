@@ -57,6 +57,7 @@ public class SecurityConfig {
             //it will jump in the next block without trying the others below
             auth.antMatchers("/api/authentication/**").permitAll();
             auth.antMatchers(GET,"/api/blogs/**").permitAll();
+            auth.antMatchers(GET,"/api/users/**").hasAnyRole("ADMIN","USER");
             auth.antMatchers(PUT,"/api/users/**").hasAnyRole("ADMIN_edit","USER_edit");
             auth.antMatchers("/api/users/**").hasRole("ADMIN");
             auth.anyRequest().authenticated();

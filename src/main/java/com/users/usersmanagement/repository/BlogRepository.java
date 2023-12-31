@@ -1,6 +1,7 @@
 package com.users.usersmanagement.repository;
 
 import com.users.usersmanagement.entity.Blog;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +17,6 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
             SELECT * FROM blogs WHERE title REGEXP (:regex)
                                     OR post REGEXP (:regex)
             """, nativeQuery = true)
-    Optional<List<Blog>> searchBlogs(@Param("regex")String regex);
+    Optional<List<Blog>> searchBlogs(@Param("regex")String regex, Pageable pages);
 
 }

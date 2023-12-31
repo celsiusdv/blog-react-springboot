@@ -18,7 +18,8 @@ public class RefreshToken {
     private Instant expiryDate;
 
     @OneToOne
-    @JoinColumn(name = "user_id_fk", referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id_junction", referencedColumnName = "user_id",
+            foreignKey = @ForeignKey(name ="user_id_fk" ))//TODO: RESET DATABASE TO UPDATE COLUMNS
     private User user;
 
     public RefreshToken(){}

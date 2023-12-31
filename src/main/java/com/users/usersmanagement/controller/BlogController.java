@@ -18,14 +18,15 @@ public class BlogController {
     @Autowired private BlogService blogService;
 
 
-    @GetMapping(path = "/blogs")
-    public ResponseEntity<List<Blog>> getBlogs(){
-        return new ResponseEntity<>(blogService.getBlogs(),HttpStatus.OK);
+    @GetMapping(path = "/page/{page}")
+    public ResponseEntity<List<Blog>> getBlogs(@PathVariable("page")Integer page){
+        return new ResponseEntity<>(blogService.getBlogs(page),HttpStatus.OK);
     }
 
-    @GetMapping(path = "/blogs/{search}")
-    public ResponseEntity<List<Blog>>searchBlogs(@PathVariable("search") String search){
-        return new ResponseEntity<>(blogService.searchBlogs(search),HttpStatus.OK);
+    @GetMapping(path = "/search/{page}/{search}")
+    public ResponseEntity<List<Blog>>searchBlogs(@PathVariable("page")Integer page,
+                                                 @PathVariable("search") String search){
+        return new ResponseEntity<>(blogService.searchBlogs(search,page),HttpStatus.OK);
     }
 
     @GetMapping(path = "/blog/{id}")

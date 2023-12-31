@@ -42,6 +42,9 @@ public class User implements UserDetails{
                     foreignKey = @ForeignKey(name = "fk_role_id")))
     private Set<Role> authorities;
 
+    @OneToOne(mappedBy = "user",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},orphanRemoval = true)
+    private RefreshToken refreshToken;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
