@@ -4,12 +4,14 @@ import { Blog } from "../../models/blog";
 import { useAuthContext } from "../../context/AuthProvider";
 import { UserAuth } from "../../models/types";
 import useInterceptor from "../../hooks/useInterceptor";
+import { useNavigate } from "react-router-dom";
 
 const CreateBlog = () => {
     const { auth }: UserAuth = useAuthContext();
     const axiosPrivate = useInterceptor();
     const [title,setTitle]=useState<string>("");
     const [post,setPost]=useState<string>("");
+    const navigate = useNavigate();
     let blog:Blog={}
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) =>{
         event.preventDefault();
@@ -18,8 +20,8 @@ const CreateBlog = () => {
             post:post,
             user:auth.user
         };
-        const response = await axiosPrivate.post<Blog>("/api/blogs/blog/",blog);
-        console.log(response.data);
+        await axiosPrivate.post<Blog>("/api/blogs/blog/",blog);
+        navigate("/");
     }
     return ( 
         <div className="create-blog">
