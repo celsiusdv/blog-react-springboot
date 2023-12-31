@@ -1,6 +1,5 @@
 import { useLocation, Outlet, Navigate } from "react-router-dom";
 import { useAuthContext } from "./AuthProvider";
-
 import { Role} from "../models/user";
 import React from "react";
 import { RoleProps, UserAuth } from "../models/types";
@@ -34,7 +33,10 @@ const RequireAuth = ({ authorities }: RoleProps) => {
             return <Navigate to="/login" state={{ from: location }} replace />;
         }
         if (isRole === true) return <Outlet />;//render the child component inside <RequireAuth> in App nested routes
-        else return (user !== null) && <h1> unauthorized </h1>;//return this component if the user exist but without the required role
+        else return (user !== null) && <div style={{
+                                            fontSize:70,
+                                            textAlign:"center"
+                                        }}> unauthorized </div>;//return this component if the user exist but without the required role
     };
 
     return (

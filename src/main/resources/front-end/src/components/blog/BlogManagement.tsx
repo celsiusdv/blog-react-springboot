@@ -1,5 +1,5 @@
 import { Card, CardHeader, Divider, CardBody, CardFooter, Image, Button } from "@nextui-org/react";
-import { Dispatch, FormEvent } from "react";
+import { Dispatch } from "react";
 import Restricted from "../../context/Restricted";
 import { User } from "../../models/user";
 

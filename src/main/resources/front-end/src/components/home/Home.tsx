@@ -1,13 +1,10 @@
-import { Button, Input, Pagination, Tooltip } from "@nextui-org/react";
-import { useAuthContext } from "../../context/AuthProvider";
-import Restricted from "../../context/Restricted";
+import { Input, Pagination, Tooltip } from "@nextui-org/react";
 import { useFetch } from "../../hooks/useFetch";
-import { Blog } from "../../models/blog";
-import { FetchedBlogs, UserAuth } from "../../models/types";
+import { FetchedBlogs } from "../../models/types";
 import BlogList from "../blog/BlogList";
 import { SearchIcon } from "../icons/SearchIcon";
 import "./home.css";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 
 const Home = () => {
