@@ -4,6 +4,7 @@ import { Role} from "../models/user";
 import React from "react";
 import { RoleProps, UserAuth } from "../models/types";
 import { LoginResponse } from "../models/login-response";
+import { text } from "stream/consumers";
 
 
 const RequireAuth = ({ authorities }: RoleProps) => {
