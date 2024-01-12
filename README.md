@@ -21,9 +21,9 @@ This project is developed with the purpose of understand how to register, authen
 
 ---
 
-<img src="./assets/home.png" width=400>
-<img src="./assets/login.png" width=400>
-<img src="./assets/signup.png" width=400>
-<img src="./assets/blog.png" width=400>
-<img src="./assets/users.png" width=400>
-<img src="./assets/create.png" width=400>
+<img src="./assets/home.png" width=600>
+<img src="./assets/login.png" width=600>
+<img src="./assets/signup.png" width=600>
+<img src="./assets/blog.png" width=600>
+<img src="./assets/users.png" width=600>
+<img src="./assets/create.png" width=600>

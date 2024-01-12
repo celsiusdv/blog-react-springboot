@@ -2,8 +2,10 @@ import { Button, Input } from "@nextui-org/react";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { User } from "../../models/user";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+    const navigate = useNavigate();
     ///validators
     const [name,setName]=useState<string>("");
     const [requiredUserName,setRequiredUserName]=useState<boolean>(true);
@@ -69,7 +71,7 @@ const Register = () => {
                 }
             );
             console.log("request to the server-> ",user,"\nresponse from the server->",response.data);
-
+            navigate("/");
         } catch (error:unknown) {
             if(axios.isAxiosError(error)){
                 if(error.response?.status === 500){
