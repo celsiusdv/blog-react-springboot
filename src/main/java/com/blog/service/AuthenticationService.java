@@ -98,7 +98,7 @@ public class AuthenticationService {
                 log.info("\u001B[35mgenerated new access token: "+accessToken+"\u001B[0m");
             } else throw new TokenException("invalid token or user is null");
         }catch(Exception e){
-            log.error(e.getMessage());
+            log.warn(e.getMessage());
             throw new TokenException(e.getMessage());
         }
         return new Token(accessToken, refreshToken.getRefreshToken());

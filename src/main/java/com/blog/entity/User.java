@@ -43,7 +43,7 @@ public class User implements UserDetails{
     private Set<Role> authorities;
 
     @OneToOne(mappedBy = "user",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},orphanRemoval = true)
+            cascade = {CascadeType.ALL},orphanRemoval = true)
     private RefreshToken refreshToken;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
@@ -77,7 +77,11 @@ public class User implements UserDetails{
     public void setAuthorities(Set<Role> authorities){
         this.authorities=authorities;
     }
-    //set blogs method
+    //set blogs method...
+    public void removeBlog(Blog blog) {
+        blogs.remove(blog);
+        blog.setUser(null); // Remove the association from the Blog entity
+    }
 
 
     public Integer getUserId(){ return this.userId; }
@@ -98,7 +102,7 @@ public class User implements UserDetails{
         return roles;
     }
 
-    //get blogs method
+    @JsonIgnore public List<Blog> getBlogs(){ return blogs; }
     @Override public String getUsername(){ return this.getEmail(); }
     @Override @JsonIgnore public boolean isAccountNonExpired() {return true;}
     @Override @JsonIgnore public boolean isAccountNonLocked() {return true;}

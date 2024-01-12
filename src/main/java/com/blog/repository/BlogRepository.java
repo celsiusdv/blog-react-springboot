@@ -13,10 +13,14 @@ import java.util.Optional;
 @Repository
 public interface BlogRepository extends JpaRepository<Blog, Integer> {
 
+    /*    @Query(value = """ mariadb syntax
+                SELECT * FROM blogs WHERE title REGEXP (:regex)
+                                        OR post REGEXP (:regex)
+                """, nativeQuery = true)*/
     @Query(value = """
-            SELECT * FROM blogs WHERE title REGEXP (:regex)
-                                    OR post REGEXP (:regex)
+            SELECT * FROM blogs WHERE title ~ (:regex)
+                                    OR post ~ (:regex)
             """, nativeQuery = true)
-    Optional<List<Blog>> searchBlogs(@Param("regex")String regex, Pageable pages);
+    Optional<List<Blog>> searchBlogs(@Param("regex") String regex, Pageable pages);
 
 }

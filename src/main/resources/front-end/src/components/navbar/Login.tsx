@@ -32,7 +32,7 @@ const Login = () => {
             loginResponse=response.data;
             loginResponse.isLoggedIn=true;
             authContext?.setAuth(loginResponse);
-            console.log("request to the server-> ",body,"\nresponse from the server->",loginResponse);
+            //console.log("request to the server-> ",body,"\nresponse from the server->",loginResponse);
             navigate(-1);
         } catch (error:unknown) {
             if(axios.isAxiosError(error)){

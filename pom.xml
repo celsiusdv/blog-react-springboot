@@ -44,9 +44,16 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<!--//////////mariadb driver-->
-		<dependency>
+<!--		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
 			<artifactId>mariadb-java-client</artifactId>
+			<scope>runtime</scope>
+		</dependency>-->
+
+		<!--//////////postgresql driver-->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
